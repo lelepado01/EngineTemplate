@@ -15,6 +15,9 @@
 
 
 struct Widget {
+    const static int WidgetPadding = 15;
+    const static int WidgetBorder = 2;
+    
     int x, y, w, h;
     int componentIndex = 0;
     SDL_Texture* labelTexture; 
@@ -22,6 +25,8 @@ struct Widget {
     UiComponent* components[10];
     
     std::optional<SDL_Point> mouseGrab = {};
+    
+    bool isBeingGrabbed(){ return mouseGrab.has_value(); }; 
 };
 
 #endif /* Widget_hpp */

@@ -16,7 +16,9 @@
 class Checkbox : public UiComponent {
 private:
     SDL_Texture* labelTexture;
-    bool mouseHasClickedAlready = false; 
+    bool mouseHasClickedAlready = false;
+    
+    const int checkboxFillPadding = 5;
 
 protected:
     bool* content;

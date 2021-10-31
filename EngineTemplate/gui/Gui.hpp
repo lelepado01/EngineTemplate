@@ -9,12 +9,14 @@
 #define Gui_hpp
 
 #include <stdio.h>
+#include <math.h>
 
 #include "Engine.hpp"
 #include "FloatSlider.hpp"
 #include "IntSlider.hpp"
 #include "Checkbox.hpp"
 #include "Widget.hpp"
+#include "math_common.hpp"
 
 class Gui {
 private:
@@ -25,12 +27,13 @@ private:
     static Widget widgets[10];
     static Widget tempWidget;
     
-    static bool mouseOnTopBar(Widget* widget, int x, int y);
     static void widgetCheckForMouseDrag(Widget* widget);
+    static void drawWidgetWindow(Widget* widget);
+
     
 public:
     static void NewFrame(); 
-    static void Begin(std::string label, int x, int y, int width, int height);
+    static void Begin(std::string label, int x, int y);
     static void End();
     
     static void Update();

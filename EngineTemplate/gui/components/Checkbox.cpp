@@ -18,19 +18,21 @@ Checkbox::Checkbox(std::string label, bool* c) {
 }
 
 Checkbox::~Checkbox(){
-
+    Engine::DeleteTexture(labelTexture);
+    delete content;
 }
 
 void Checkbox::Update(int offsetX, int offsetY){
-    if (!mouseHasClickedAlready && Engine::MouseLeftKeyIsPressed()){
-        mouseHasClickedAlready = true;
-        SDL_Point mouse = Engine::GetMousePosition();
-        
-        if (mouse.x < offsetX + w && mouse.x > offsetX && mouse.y < offsetY + h && mouse.y > offsetY){
-            *content = !(*content);
+    if (Engine::MouseLeftKeyIsPressed()){
+        if (!mouseHasClickedAlready){
+            mouseHasClickedAlready = true;
+            SDL_Point mouse = Engine::GetMousePosition();
+            
+            if (MathCommon::RectangleContainsPoint(new SDL_Rect{offsetX, offsetY, w, h}, &mouse)){
+                *content = !(*content);
+            }
         }
-    }
-    if (!Engine::MouseLeftKeyIsPressed()){
+    } else {
         mouseHasClickedAlready = false;
     }
 }
@@ -38,12 +40,15 @@ void Checkbox::Update(int offsetX, int offsetY){
 void Checkbox::Draw(int offsetX, int offsetY){
     
     Engine::SetEngineDrawColor(255, 255, 255, 255);
-    Engine::DrawRectangle(offsetX, offsetY, 50, 50);
+    Engine::DrawRectangle(offsetX, offsetY, w, h);
     
     if (*this->content) {
-        Engine::FillRectangle(offsetX+5, offsetY+5, 40, 40);
+        Engine::FillRectangle(offsetX + checkboxFillPadding,
+                              offsetY + checkboxFillPadding,
+                              w - 2*checkboxFillPadding,
+                              h - 2*checkboxFillPadding);
     }
     
-    Engine::RenderTexture(labelTexture, offsetX + w + 15, offsetY, 100, 50);
+    Engine::RenderTexture(labelTexture, offsetX + w + textPadding, offsetY, textLetterSize * (int)label.length(), h);
 
 }
