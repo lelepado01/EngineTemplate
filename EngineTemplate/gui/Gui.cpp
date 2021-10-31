@@ -57,8 +57,14 @@ void Gui::Update(){
     for (int i = 0; i < widgetIndex; i++) {
         if (!widgetHasMovedThisFrame) widgetCheckForMouseDrag(&widgets[i]);
         
+        int componentsOffsetY = 0;
         for (int j = 0; j < widgets[i].componentIndex; j++) {
-            widgets[i].components[j]->Update();
+            int offsetX = widgets[i].x + 15;
+            int offsetY = widgets[i].y + 15 + topBarHeight + componentsOffsetY + 15 * j;
+
+            widgets[i].components[j]->Update(offsetX, offsetY);
+
+            componentsOffsetY += widgets[i].components[j]->GetHeight();
         }
     }
 }
@@ -111,7 +117,7 @@ void Gui::NewFrame(){
 }
 
 void Gui::CreateCheckbox(std::string label, bool *v){
-    UiComponent* c = new Checkbox(label, v, tempWidget.x, tempWidget.y);
+    UiComponent* c = new Checkbox(label, v);
     tempWidget.components[tempWidget.componentIndex] = c;
     tempWidget.componentIndex += 1;
 }

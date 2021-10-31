@@ -12,12 +12,14 @@ class UiComponent {
 protected:
     std::string label; 
     void* content;
-    int x, y, w, h;
+    int w, h;
     
 public:    
-    virtual void Update(){};
+    virtual void Update(int offsetX, int offsetY){
+        std::cout << "Virtual Method Update\n";
+    };
     virtual void Draw(int offsetX, int offsetY){
-        std::cout << "Virtual Method\n";
+        std::cout << "Virtual Method Draw\n";
     };
     
     inline int GetHeight() { return h; };

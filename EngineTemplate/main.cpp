@@ -8,7 +8,7 @@
 #include "Time.hpp"
 #include "Vector2f.hpp"
 
-#include "networking/netcommon/net_common.h"
+//#include "networking/netcommon/net_common.h"
 
 int main(int, char**) {
     
@@ -17,7 +17,8 @@ int main(int, char**) {
     
     Vector2f pos = Vector2f(0,100);
     
-    bool varbool = false;
+    bool varbool1 = false;
+    bool varbool2 = true;
     
     while (Engine::IsRunning()) {
         Time::Count();
@@ -35,8 +36,9 @@ int main(int, char**) {
         
         
         Gui::Begin("Window 1", 10,10,400,200);
-        Gui::CreateCheckbox("Checkbox", &varbool);
-        Gui::CreateCheckbox("Checkbox", &varbool);
+        Gui::CreateCheckbox("Checkbox 1", &varbool1);
+        Gui::CreateCheckbox("Checkbox 2", &varbool2);
+        Gui::CreateCheckbox("Checkbox 3", &varbool2);
         Gui::End();
         
         Gui::Begin("Window 2", 100,600,100,200);

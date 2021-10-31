@@ -16,15 +16,16 @@
 class Checkbox : public UiComponent {
 private:
     SDL_Texture* labelTexture;
+    bool mouseHasClickedAlready = false; 
 
 protected:
     bool* content;
         
 public:
-    Checkbox(std::string label, bool* c, int x, int y);
+    Checkbox(std::string label, bool* c);
     ~Checkbox();
     
-    void Update() override;
+    void Update(int offsetX, int offsetY) override;
     void Draw(int offsetX, int offsetY) override;
 };
 
