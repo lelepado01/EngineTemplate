@@ -5252,6 +5252,7 @@
 		B698E423272E9E580008E62D /* wait_for_one.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = wait_for_one.cpp; sourceTree = "<group>"; };
 		B698E424272E9E580008E62D /* Makefile.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
 		B698E425272E9E580008E62D /* Makefile.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
+		B698E43B272F07DA0008E62D /* MathCommon.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MathCommon.hpp; sourceTree = "<group>"; };
 		B6B2B84626EA9FD1002D804E /* EngineTemplate */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = EngineTemplate; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6B2B84926EA9FD1002D804E /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		B6B2B85226EA9FF5002D804E /* Vector2f.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Vector2f.hpp; sourceTree = "<group>"; };
@@ -17506,6 +17507,7 @@
 		B6B2B85126EA9FF5002D804E /* physics */ = {
 			isa = PBXGroup;
 			children = (
+				B698E43B272F07DA0008E62D /* MathCommon.hpp */,
 				B6DFA4522726F9AC006395E9 /* Vector3f.cpp */,
 				B6DFA4512726F9AC006395E9 /* Vector3f.hpp */,
 				B6B2B85226EA9FF5002D804E /* Vector2f.hpp */,

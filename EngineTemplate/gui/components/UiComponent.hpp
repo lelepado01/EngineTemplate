@@ -8,7 +8,7 @@
 #ifndef UiComponent_hpp
 #define UiComponent_hpp
 
-#include "math_common.hpp"
+#include "MathCommon.hpp"
 
 class UiComponent {
 protected:

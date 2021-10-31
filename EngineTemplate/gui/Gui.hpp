@@ -16,7 +16,7 @@
 #include "IntSlider.hpp"
 #include "Checkbox.hpp"
 #include "Widget.hpp"
-#include "math_common.hpp"
+#include "MathCommon.hpp"
 
 class Gui {
 private:
