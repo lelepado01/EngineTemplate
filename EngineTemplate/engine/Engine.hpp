@@ -57,9 +57,13 @@ public:
     static void DeleteTexture(SDL_Texture *tex);
     
     static void SetEngineDrawColor(int r, int g, int b, int a);
-    static void SetEngineScale(int scale); 
+    static void SetEngineScale(int scale);
+    
     static void DrawLine(int x1, int y1, int x2, int y2);
+    
     static void DrawRectangle(int x, int y, int w, int h);
+    static void FillRectangle(int x, int y, int w, int h);
+    
     static void DrawPixel(float x, float y);
     static void DrawPixels(SDL_Point* array, int length);
 };

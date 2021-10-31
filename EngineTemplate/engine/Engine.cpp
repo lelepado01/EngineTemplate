@@ -49,7 +49,7 @@ void Engine::InitSDL(){
     }
     
     TTF_Init();
-    font = TTF_OpenFont("/Users/gabrielepadovani/Desktop/Code/C++/ShooterSDL/ShooterSDL/assets/font.ttf", 102);
+    font = TTF_OpenFont("/Users/gabrielepadovani/Desktop/Code/C++/EngineTemplate/EngineTemplate/assets/font.ttf", 80);
     
     for(int i = 0; i < 322; i++) {
        KEYS[i] = false;
@@ -73,7 +73,7 @@ SDL_Texture* Engine::LoadTexture(const std::string &file){
 }
 
 SDL_Texture* Engine::LoadTextureFromText(const char* text) {
-    SDL_Color color = {255, 0,0,255};
+    SDL_Color color = {255, 255, 255, 255};
     SDL_Surface* surface = TTF_RenderText_Solid(font, text, color);
     
     return SDL_CreateTextureFromSurface(Renderer, surface);
@@ -166,6 +166,11 @@ void Engine::DrawLine(int x1, int y1, int x2, int y2){
 void Engine::DrawRectangle(int x, int y, int w, int h){
     SDL_Rect r = SDL_Rect{x, y, w, h};
     SDL_RenderDrawRect(Renderer, &r);
+}
+
+void Engine::FillRectangle(int x, int y, int w, int h){
+    SDL_Rect r = SDL_Rect{x, y, w, h};
+    SDL_RenderFillRect(Renderer, &r);
 }
 
 void Engine::DrawPixels(SDL_Point *array, int length){
