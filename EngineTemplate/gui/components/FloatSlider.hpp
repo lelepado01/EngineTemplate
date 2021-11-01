@@ -20,12 +20,16 @@ protected:
     float min;
     float max;
     
+    const int sliderPadding = 5;
+
+    SDL_Texture* valueTexture;
+
 public:
     FloatSlider(std::string label, float* c, float min, float max);
     ~FloatSlider();
     
-    void Update();
-    void Draw();
+    void Update(int offsetX, int offsetY) override;
+    void Draw(int offsetX, int offsetY) override;
 };
 
 

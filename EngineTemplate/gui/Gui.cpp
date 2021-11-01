@@ -27,18 +27,21 @@ void Gui::Begin(std::string label, int x, int y){
     tempWidget.w = 2 * (Widget::WidgetPadding + initialWidgetHeight);
     tempWidget.h = initialWidgetHeight;
     
-    tempWidget.labelTexture = Engine::LoadTextureFromText(label.c_str());
+    if (!widgets[widgetIndex].labelTexture){
+        tempWidget.labelTexture = Engine::LoadTextureFromText(label.c_str());
+    }
     
     tempWidget.mouseGrab = {};
 }
 
 void Gui::End(){
-    if (widgetIndex + 1 > lastFrameWidgetsCount) {
+    if (widgetIsNew()) {
         widgets[widgetIndex] = tempWidget;
     }
     
     widgetIndex += 1;
-    tempWidget = Widget{};
+
+    tempWidget = {};
 }
 
 
@@ -71,7 +74,7 @@ void Gui::Update(){
 void Gui::widgetCheckForMouseDrag(Widget* widget){
     if (Engine::MouseLeftKeyIsPressed()){
         SDL_Point mouse = Engine::GetMousePosition();
-        SDL_Rect* widgetArea = new SDL_Rect{widget->x, widget->y, widget->w, widget->h};
+        SDL_Rect* widgetArea = new SDL_Rect{widget->x, widget->y, widget->w, topBarHeight};
         
         if (MathCommon::RectangleContainsPoint(widgetArea, &mouse) || widget->isBeingGrabbed()) {
             
@@ -83,6 +86,8 @@ void Gui::widgetCheckForMouseDrag(Widget* widget){
             
             widget->mouseGrab = SDL_Point{ mouse.x - widget->x , mouse.y - widget->y };
         }
+        
+        delete widgetArea;
     } else {
         widget->mouseGrab = {};
     }
@@ -129,34 +134,44 @@ void Gui::NewFrame(){
     widgetIndex = 0;
 }
 
+bool Gui::widgetIsNew(){
+    return widgetIndex + 1 > lastFrameWidgetsCount;
+}
+
 void Gui::CreateCheckbox(std::string label, bool *v){
-    UiComponent* c = new Checkbox(label, v);
-    tempWidget.components[tempWidget.componentIndex] = c;
-    
-    tempWidget.w = std::max(tempWidget.w, c->GetWidth());
-    tempWidget.h += c->GetHeight();
-    
-    tempWidget.componentIndex += 1;
+    if (widgetIsNew()) {
+        UiComponent* c = new Checkbox(label, v);
+        tempWidget.components[tempWidget.componentIndex] = c;
+        
+        tempWidget.w = std::max(tempWidget.w, c->GetWidth());
+        tempWidget.h += c->GetHeight();
+        
+        tempWidget.componentIndex += 1;
+    }
 }
 
 
 void Gui::CreateFloatSlider(std::string label, float *v, float min, float max){
-    UiComponent* c = new FloatSlider(label, v, min, max);
-    tempWidget.components[tempWidget.componentIndex] = c;
-    
-    tempWidget.w = std::max(tempWidget.w, c->GetWidth());
-    tempWidget.h += c->GetHeight();
-    
-    tempWidget.componentIndex += 1;
+    if (widgetIsNew()) {
+        UiComponent* c = new FloatSlider(label, v, min, max);
+        tempWidget.components[tempWidget.componentIndex] = c;
+        
+        tempWidget.w = std::max(tempWidget.w, c->GetWidth());
+        tempWidget.h += c->GetHeight();
+        
+        tempWidget.componentIndex += 1;
+    }
 }
 
 
 void Gui::CreateIntSlider(std::string label, int *v, int min, int max){
-    UiComponent* c = new IntSlider(label, v, min, max);
-    tempWidget.components[tempWidget.componentIndex] = c;
-    
-    tempWidget.w = std::max(tempWidget.w, c->GetWidth());
-    tempWidget.h += c->GetHeight();
-    
-    tempWidget.componentIndex += 1;
+    if (widgetIsNew()) {
+        UiComponent* c = new IntSlider(label, v, min, max);
+        tempWidget.components[tempWidget.componentIndex] = c;
+        
+        tempWidget.w = std::max(tempWidget.w, c->GetWidth());
+        tempWidget.h += c->GetHeight();
+        
+        tempWidget.componentIndex += 1;
+    }
 }

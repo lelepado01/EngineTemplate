@@ -16,13 +16,17 @@ protected:
     void* content;
     int w, h;
     
+    SDL_Texture* labelTexture;
+    
     const int textPadding = 15;
     const int textLetterSize = 12; 
     
-public:    
+public:
+    
     virtual void Update(int offsetX, int offsetY){
         std::cout << "Virtual Method Update\n";
     };
+    
     virtual void Draw(int offsetX, int offsetY){
         std::cout << "Virtual Method Draw\n";
     };

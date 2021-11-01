@@ -30,6 +30,7 @@ private:
     static void widgetCheckForMouseDrag(Widget* widget);
     static void drawWidgetWindow(Widget* widget);
 
+    static bool widgetIsNew(); 
     
 public:
     static void NewFrame(); 

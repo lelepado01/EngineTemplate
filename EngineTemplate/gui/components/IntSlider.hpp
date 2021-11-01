@@ -20,12 +20,16 @@ protected:
     int min;
     int max;
     
+    const int sliderPadding = 5; 
+    
+    SDL_Texture* valueTexture; 
+    
 public:
     IntSlider(std::string label, int* c, int min, int max);
     ~IntSlider();
     
-    void Update();
-    void Draw();
+    void Update(int offsetX, int offsetY) override;
+    void Draw(int offsetX, int offsetY) override;
 };
 
 

@@ -19,6 +19,7 @@ int main(int, char**) {
     
     bool varbool1 = false;
     bool varbool2 = true;
+    int range1 = 75;
     
     while (Engine::IsRunning()) {
         Time::Count();
@@ -35,20 +36,24 @@ int main(int, char**) {
         if (pos.x > Engine::WINDOW_WIDTH) pos.x = 0;
         
         
-        Gui::Begin("Window 1", 10,10);
-        Gui::CreateCheckbox("Checkbox 1", &varbool1);
-        Gui::CreateCheckbox("Checkbox 2", &varbool2);
-        Gui::CreateCheckbox("Checkbox 3", &varbool2);
-        Gui::End();
-        
         Gui::Begin("Window 2", 100,600);
         
+        Gui::CreateCheckbox("Checkbox 1", &varbool1);
+        Gui::CreateIntSlider("Slider 1", &range1, 0, 100);
+
+        Gui::End();
+
+        Gui::Begin("Window 1", 102,101);
+
+        Gui::CreateCheckbox("Checkbox 2", &varbool2);
+        Gui::CreateCheckbox("Checkbox 3", &varbool2);
+
         Gui::End();
 
 
         Gui::Update();
-        Gui::Draw(); 
-        
+        Gui::Draw();
+
         Engine::Render();
     }
     

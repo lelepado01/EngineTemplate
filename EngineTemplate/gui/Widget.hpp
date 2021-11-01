@@ -20,6 +20,7 @@ struct Widget {
     
     int x, y, w, h;
     int componentIndex = 0;
+    
     SDL_Texture* labelTexture; 
     
     UiComponent* components[10];
