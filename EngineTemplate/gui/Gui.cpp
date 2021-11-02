@@ -47,16 +47,34 @@ void Gui::End(){
 
 void Gui::Update(){
     
-    widgetHasMovedThisFrame = false;
+    bool sliderIsBeingDragged = false;
     for (int i = 0; i < widgetIndex; i++) {
-        if (widgets[i].isBeingGrabbed()){
-            widgetCheckForMouseDrag(&widgets[i]);
-            break;
+        for (int j = 0; j < widgets[i].componentIndex; j++) {
+
+            if (widgets[i].components[j]->IsSlider()){
+                
+                Slider* slider = (Slider*) widgets[i].components[j];
+                if (slider->SliderIsBeingGrabbed()) {
+                    sliderIsBeingDragged = true;
+                    break;
+                }
+            }
+        }
+        if (sliderIsBeingDragged) break;
+    }
+    
+    if(!sliderIsBeingDragged){
+        widgetHasMovedThisFrame = false;
+        for (int i = 0; i < widgetIndex; i++) {
+            if (widgets[i].isBeingGrabbed()){
+                widgetCheckForMouseDrag(&widgets[i]);
+                break;
+            }
         }
     }
         
     for (int i = 0; i < widgetIndex; i++) {
-        if (!widgetHasMovedThisFrame) widgetCheckForMouseDrag(&widgets[i]);
+        if (!sliderIsBeingDragged && !widgetHasMovedThisFrame) widgetCheckForMouseDrag(&widgets[i]);
         
         int componentsOffsetY = 0;
         for (int j = 0; j < widgets[i].componentIndex; j++) {

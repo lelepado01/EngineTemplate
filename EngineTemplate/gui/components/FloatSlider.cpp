@@ -17,7 +17,7 @@ FloatSlider::FloatSlider(std::string label, float* v, float min, float max){
     this->h = 50;
     
     this->labelTexture = Engine::LoadTextureFromText(label.c_str());
-    this->valueTexture = Engine::LoadTextureFromText(std::to_string(*content).c_str()); 
+    this->valueTexture = Engine::LoadTextureFromText(getValueAsFormattedString().c_str());
 }
 
 FloatSlider::~FloatSlider(){
@@ -26,20 +26,75 @@ FloatSlider::~FloatSlider(){
     delete &label;
 }
 
+std::string FloatSlider::getValueAsFormattedString(){
+    std::string ret = std::to_string(*content);
+    
+    int indexOfDot = 0;
+    for (int i=0; i < ret.length(); i++) {
+        if (ret[i] == '.'){
+            indexOfDot = i;
+            break;
+        }
+    }
+
+    return ret.substr(0, indexOfDot+3);
+}
+
 void FloatSlider::Draw(int offsetX, int offsetY){
     
     int labelWidth = textLetterSize * (int)label.length();
     Engine::RenderTexture(labelTexture, offsetX, offsetY, labelWidth, h);
-    Engine::RenderTexture(valueTexture, offsetX + labelWidth + textPadding, offsetY, textLetterSize * (int)std::to_string(*(content)).length(), h);
+    Engine::RenderTexture(valueTexture,
+                          offsetX + w + textPadding,
+                          offsetY,
+                          textLetterSize * (int)getValueAsFormattedString().length(),
+                          h);
     
     Engine::SetEngineDrawColor(50, 50, 50, 255);
-    Engine::FillRectangle(offsetX, offsetY + h + sliderPadding, w, h / 2);
+    Engine::FillRectangle(offsetX, offsetY + h + sliderPadding, w + sliderHandleWidth, h / 2);
     
-    int xstart = offsetX + w * (*content) / (max - min);
+    int xstart = offsetX + w * getPercentageInRange();
     Engine::SetEngineDrawColor(255, 255, 255, 255);
-    Engine::FillRectangle(xstart, offsetY + h + sliderPadding, 30, h / 2);
+    Engine::FillRectangle(xstart, offsetY + h + sliderPadding, sliderHandleWidth, h / 2);
 }
 
 void FloatSlider::Update(int offsetX, int offsetY){
+    if (Engine::MouseLeftKeyIsPressed()){
+        SDL_Point mouse = Engine::GetMousePosition();
+        
+        int sliderHandleXstart = offsetX + w * getPercentageInRange();
+        int sliderHandleYstart = offsetY + h + sliderPadding;
+        
+        SDL_Rect* sliderHandleArea = new SDL_Rect{sliderHandleXstart, sliderHandleYstart, sliderHandleWidth, h / 2};
+        
+        if (MathCommon::RectangleContainsPoint(sliderHandleArea, &mouse) || SliderIsBeingGrabbed()) {
+            
+            if (SliderIsBeingGrabbed()){
+                
+                bool updated = updateSliderValue(mouse.x, offsetX);
+                if (updated){
+                    Engine::DeleteTexture(valueTexture);
+                    valueTexture = Engine::LoadTextureFromText(getValueAsFormattedString().c_str());
+                }
+            }
+            
+            sliderMouseGrab = mouse.x - sliderHandleXstart;
+        }
+        
+        delete sliderHandleArea;
+    } else {
+        sliderMouseGrab = {};
+    }
+}
+
+bool FloatSlider::updateSliderValue(int newX, int offsetX){
+    float oldContent = *content;
     
+    float newPercSlider = float(newX - offsetX) / w;
+    *content = getValueOfSliderFromPercentage(newPercSlider);
+    
+    if (*content < min) *content = min;
+    if (*content > max) *content = max;
+    
+    return oldContent != *content;
 }

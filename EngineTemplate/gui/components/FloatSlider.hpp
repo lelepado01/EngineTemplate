@@ -11,19 +11,20 @@
 #include <stdio.h>
 
 #include "Engine.hpp"
+#include "Slider.hpp"
 #include "UiComponent.hpp"
 
-class FloatSlider : public UiComponent {
-protected:
+class FloatSlider : public Slider {
+private:
     float* content;
     
-    float min;
-    float max;
+    inline float getPercentageInRange() { return ((float)*(content) - min) / (max - min); };
+    inline float getValueOfSliderFromPercentage(float perc) { return perc * (max - min) + min; };
+
+    std::string getValueAsFormattedString();
+
+    bool updateSliderValue(int newX, int offsetX);
     
-    const int sliderPadding = 5;
-
-    SDL_Texture* valueTexture;
-
 public:
     FloatSlider(std::string label, float* c, float min, float max);
     ~FloatSlider();

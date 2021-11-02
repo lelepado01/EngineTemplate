@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B65E01E027314401006DF7A7 /* Slider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B65E01DE27314401006DF7A7 /* Slider.cpp */; };
 		B6862B82272D9EE2000E9508 /* IntSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6862B80272D9EE2000E9508 /* IntSlider.cpp */; };
 		B6862B86272D9EEC000E9508 /* FloatSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6862B84272D9EEC000E9508 /* FloatSlider.cpp */; };
 		B6B2B84A26EA9FD1002D804E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6B2B84926EA9FD1002D804E /* main.cpp */; };
@@ -42,8 +43,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B65E01DE27314401006DF7A7 /* Slider.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Slider.cpp; sourceTree = "<group>"; };
+		B65E01DF27314401006DF7A7 /* Slider.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Slider.hpp; sourceTree = "<group>"; };
 		B6862B80272D9EE2000E9508 /* IntSlider.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IntSlider.cpp; sourceTree = "<group>"; };
-		B6862B81272D9EE2000E9508 /* IntSlider.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IntSlider.hpp; sourceTree = "<group>"; };
+		B6862B81272D9EE2000E9508 /* IntSlider.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IntSlider.hpp; sourceTree = "<group>"; tabWidth = 3; };
 		B6862B84272D9EEC000E9508 /* FloatSlider.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FloatSlider.cpp; sourceTree = "<group>"; };
 		B6862B85272D9EEC000E9508 /* FloatSlider.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FloatSlider.hpp; sourceTree = "<group>"; };
 		B6862B8E272DB6EC000E9508 /* Widget.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Widget.hpp; sourceTree = "<group>"; };
@@ -17572,6 +17575,8 @@
 				B6862B81272D9EE2000E9508 /* IntSlider.hpp */,
 				B6862B84272D9EEC000E9508 /* FloatSlider.cpp */,
 				B6862B85272D9EEC000E9508 /* FloatSlider.hpp */,
+				B65E01DE27314401006DF7A7 /* Slider.cpp */,
+				B65E01DF27314401006DF7A7 /* Slider.hpp */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -17653,6 +17658,7 @@
 				B6EAF605272C9233004E4664 /* Gui.cpp in Sources */,
 				B6B2B86F26EAA0DB002D804E /* Engine.cpp in Sources */,
 				B6EAF60C272C9539004E4664 /* Checkbox.cpp in Sources */,
+				B65E01E027314401006DF7A7 /* Slider.cpp in Sources */,
 				B6B2B87026EAA0DB002D804E /* Time.cpp in Sources */,
 				B6862B82272D9EE2000E9508 /* IntSlider.cpp in Sources */,
 				B6B2B87126EAA0DB002D804E /* Vector2f.hpp in Sources */,

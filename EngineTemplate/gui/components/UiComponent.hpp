@@ -8,6 +8,10 @@
 #ifndef UiComponent_hpp
 #define UiComponent_hpp
 
+#include <stdio.h>
+#include <string>
+#include <iostream>
+
 #include "MathCommon.hpp"
 
 class UiComponent {
@@ -30,9 +34,11 @@ public:
     virtual void Draw(int offsetX, int offsetY){
         std::cout << "Virtual Method Draw\n";
     };
-    
+
     inline int GetWidth() { return w + (int)label.length() * 20; };
     inline int GetHeight() { return h; };
+    
+    virtual inline bool IsSlider(){ return false; }; 
 };
 
 #endif /* UiComponent_hpp */

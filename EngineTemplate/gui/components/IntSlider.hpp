@@ -9,27 +9,30 @@
 #define IntSlider_hpp
 
 #include <stdio.h>
+#include <optional>
 
 #include "Engine.hpp"
 #include "UiComponent.hpp"
+#include "Slider.hpp"
 
-class IntSlider : public UiComponent {
-protected:
+class IntSlider : public Slider {
+private:
     int* content;
     
-    int min;
-    int max;
-    
-    const int sliderPadding = 5; 
-    
-    SDL_Texture* valueTexture; 
-    
+    inline float getPercentageInRange() { return ((float)*(content) - min) / (max - min); };
+    inline int getValueOfSliderFromPercentage(float perc) { return (int)floor(perc * (max - min)) + min; };
+    inline std::string getValueAsFormattedString(){ return std::to_string(*content); };
+
+    bool updateSliderValue(int newX, int offsetX);
+
+
+            
 public:
     IntSlider(std::string label, int* c, int min, int max);
     ~IntSlider();
     
     void Update(int offsetX, int offsetY) override;
-    void Draw(int offsetX, int offsetY) override;
+    void Draw(int offsetX, int offsetY) override;    
 };
 
 
