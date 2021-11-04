@@ -73,8 +73,9 @@ void FloatSlider::Update(int offsetX, int offsetY){
                 
                 bool updated = updateSliderValue(mouse.x, offsetX);
                 if (updated){
-                    Engine::DeleteTexture(valueTexture);
+                    SDL_Texture* oldValueTexture = valueTexture;
                     valueTexture = Engine::LoadTextureFromText(getValueAsFormattedString().c_str());
+                    Engine::DeleteTexture(oldValueTexture);
                 }
             }
             

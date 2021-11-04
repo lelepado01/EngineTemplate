@@ -76,7 +76,14 @@ SDL_Texture* Engine::LoadTextureFromText(const char* text) {
     SDL_Color color = {255, 255, 255, 255};
     SDL_Surface* surface = TTF_RenderText_Solid(font, text, color);
     
-    return SDL_CreateTextureFromSurface(Renderer, surface);
+    SDL_Texture* tex = SDL_CreateTextureFromSurface(Renderer, surface);
+    
+    SDL_FreeSurface(surface);
+    if (tex == nullptr){
+        LogSDLError(std::cout, "LoadTextureFromText");
+    }
+    
+    return tex;
 }
 
 

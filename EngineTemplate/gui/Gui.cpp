@@ -78,9 +78,9 @@ void Gui::Update(){
         
         int componentsOffsetY = 0;
         for (int j = 0; j < widgets[i].componentIndex; j++) {
+            
             int offsetX = widgets[i].x + Widget::WidgetPadding;
             int offsetY = widgets[i].y + topBarHeight + componentsOffsetY + Widget::WidgetPadding * (j+1);
-
             widgets[i].components[j]->Update(offsetX, offsetY);
 
             componentsOffsetY += widgets[i].components[j]->GetHeight();

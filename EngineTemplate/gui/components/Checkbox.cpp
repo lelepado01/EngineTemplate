@@ -27,10 +27,13 @@ void Checkbox::Update(int offsetX, int offsetY){
         if (!mouseHasClickedAlready){
             mouseHasClickedAlready = true;
             SDL_Point mouse = Engine::GetMousePosition();
+            SDL_Rect* checkboxContainer = new SDL_Rect{offsetX, offsetY, w, h};
             
-            if (MathCommon::RectangleContainsPoint(new SDL_Rect{offsetX, offsetY, w, h}, &mouse)){
+            if (MathCommon::RectangleContainsPoint(checkboxContainer, &mouse)){
                 *content = !(*content);
             }
+            
+            delete checkboxContainer;
         }
     } else {
         mouseHasClickedAlready = false;
