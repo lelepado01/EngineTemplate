@@ -1,22 +1,16 @@
 
 #include <stdio.h>
 #include <iostream>
-#include <math.h>
 
 #include "Gui.hpp"
 #include "Engine.hpp"
 #include "Time.hpp"
-#include "Vector2f.hpp"
-
-//#include "networking/netcommon/net_common.h"
 
 int main(int, char**) {
     
     Engine::InitSDL();
     SDL_Color clearColor = {255,255,255,255};
-    
-    Vector2f pos = Vector2f(0,100);
-    
+        
     bool varbool1 = false;
     bool varbool2 = true;
     float range1 = 75;
@@ -29,17 +23,11 @@ int main(int, char**) {
         Engine::HandleEvents();
         Engine::ClearScreen(clearColor);
         
-        Engine::SetEngineDrawColor(255, 0, 0, 255);
-        Engine::DrawRectangle(pos.x, pos.y, 150, 150);
-
-        pos.x += 1000 * Time::DeltaTime();
-        if (pos.x > Engine::WINDOW_WIDTH) pos.x = 0;
-        
         
         Gui::Begin("Window 2", 100,600);
         
         Gui::CreateCheckbox("Checkbox 1", &varbool1);
-        Gui::CreateFloatSlider("Slider 1", &range1, 30, 100);
+        Gui::CreateFloatSlider("Slider 1", &range1, 30, 80);
 
         Gui::End();
 
