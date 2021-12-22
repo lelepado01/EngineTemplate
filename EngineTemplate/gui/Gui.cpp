@@ -19,7 +19,7 @@ const SDL_Color topBarColor = SDL_Color{50, 50, 50, 255};
 const int topBarHeight = 50;
 
 
-void Gui::Begin(std::string label, int x, int y){
+void Gui::Begin(const std::string& label, int x, int y){
     int initialWidgetHeight = 100;
     
     tempWidget.x = x;
@@ -67,14 +67,14 @@ void Gui::Update(){
         widgetHasMovedThisFrame = false;
         for (int i = 0; i < widgetIndex; i++) {
             if (widgets[i].isBeingGrabbed()){
-                widgetCheckForMouseDrag(&widgets[i]);
+                widgetCheckForMouseDrag(widgets[i]);
                 break;
             }
         }
     }
         
     for (int i = 0; i < widgetIndex; i++) {
-        if (!sliderIsBeingDragged && !widgetHasMovedThisFrame) widgetCheckForMouseDrag(&widgets[i]);
+        if (!sliderIsBeingDragged && !widgetHasMovedThisFrame) widgetCheckForMouseDrag(widgets[i]);
         
         int componentsOffsetY = 0;
         for (int j = 0; j < widgets[i].componentIndex; j++) {
@@ -89,25 +89,23 @@ void Gui::Update(){
 }
 
 
-void Gui::widgetCheckForMouseDrag(Widget* widget){
+void Gui::widgetCheckForMouseDrag(Widget& widget){
     if (Engine::MouseLeftKeyIsPressed()){
         SDL_Point mouse = Engine::GetMousePosition();
-        SDL_Rect* widgetArea = new SDL_Rect{widget->x, widget->y, widget->w, topBarHeight};
+        SDL_Rect widgetArea {widget.x, widget.y, widget.w, topBarHeight};
         
-        if (MathCommon::RectangleContainsPoint(widgetArea, &mouse) || widget->isBeingGrabbed()) {
+        if (MathCommon::RectangleContainsPoint(widgetArea, mouse) || widget.isBeingGrabbed()) {
             
-            if (widget->isBeingGrabbed()){
-                widget->x = mouse.x - widget->mouseGrab.value().x;
-                widget->y = mouse.y - widget->mouseGrab.value().y;
+            if (widget.isBeingGrabbed()){
+                widget.x = mouse.x - widget.mouseGrab.value().x;
+                widget.y = mouse.y - widget.mouseGrab.value().y;
                 widgetHasMovedThisFrame = true;
             }
             
-            widget->mouseGrab = SDL_Point{ mouse.x - widget->x , mouse.y - widget->y };
+            widget.mouseGrab = SDL_Point{ mouse.x - widget.x , mouse.y - widget.y };
         }
-        
-        delete widgetArea;
     } else {
-        widget->mouseGrab = {};
+        widget.mouseGrab = {};
     }
 
 }
@@ -116,7 +114,7 @@ void Gui::widgetCheckForMouseDrag(Widget* widget){
 void Gui::Draw(){
     for (int i = 0; i < widgetIndex; i++) {
         
-        drawWidgetWindow(&widgets[i]);
+        drawWidgetWindow(widgets[i]);
         
         int componentsOffsetY = 0;
         for (int j = 0; j < widgets[i].componentIndex; j++) {
@@ -130,19 +128,19 @@ void Gui::Draw(){
     }
 }
 
-void Gui::drawWidgetWindow(Widget* widget){
+void Gui::drawWidgetWindow(Widget& widget){
     Engine::SetEngineDrawColor(topBarColor.r, topBarColor.g, topBarColor.b, topBarColor.a);
-    Engine::FillRectangle(widget->x - Widget::WidgetBorder,
-                          widget->y,
-                          widget->w + Widget::WidgetBorder*2,
-                          topBarHeight + widget->h+Widget::WidgetBorder);
+    Engine::FillRectangle(widget.x - Widget::WidgetBorder,
+                          widget.y,
+                          widget.w + Widget::WidgetBorder * 2,
+                          topBarHeight + widget.h + Widget::WidgetBorder);
     
     Engine::SetEngineDrawColor(windowColor.r, windowColor.g, windowColor.b, windowColor.a);
-    Engine::FillRectangle(widget->x, widget->y + topBarHeight, widget->w, widget->h);
+    Engine::FillRectangle(widget.x, widget.y + topBarHeight, widget.w, widget.h);
     
-    Engine::RenderTexture(widget->labelTexture,
-                          widget->x + Widget::WidgetPadding,
-                          widget->y,
+    Engine::RenderTexture(widget.labelTexture,
+                          widget.x + Widget::WidgetPadding,
+                          widget.y,
                           topBarHeight * 3,
                           topBarHeight);
 }
@@ -156,7 +154,7 @@ bool Gui::widgetIsNew(){
     return widgetIndex + 1 > lastFrameWidgetsCount;
 }
 
-void Gui::CreateCheckbox(std::string label, bool *v){
+void Gui::CreateCheckbox(const std::string& label, bool *v){
     if (widgetIsNew()) {
         UiComponent* c = new Checkbox(label, v);
         tempWidget.components[tempWidget.componentIndex] = c;
@@ -169,7 +167,7 @@ void Gui::CreateCheckbox(std::string label, bool *v){
 }
 
 
-void Gui::CreateFloatSlider(std::string label, float *v, float min, float max){
+void Gui::CreateFloatSlider(const std::string& label, float *v, float min, float max){
     if (widgetIsNew()) {
         UiComponent* c = new FloatSlider(label, v, min, max);
         tempWidget.components[tempWidget.componentIndex] = c;
@@ -182,7 +180,7 @@ void Gui::CreateFloatSlider(std::string label, float *v, float min, float max){
 }
 
 
-void Gui::CreateIntSlider(std::string label, int *v, int min, int max){
+void Gui::CreateIntSlider(const std::string& label, int *v, int min, int max){
     if (widgetIsNew()) {
         UiComponent* c = new IntSlider(label, v, min, max);
         tempWidget.components[tempWidget.componentIndex] = c;
@@ -191,5 +189,18 @@ void Gui::CreateIntSlider(std::string label, int *v, int min, int max){
         tempWidget.h += c->GetHeight();
         
         tempWidget.componentIndex += 1;
+    }
+}
+
+void Gui::CreateText(const std::string& label){
+    if (widgetIsNew()) {
+        UiComponent* c = new UiText(label);
+        tempWidget.components[tempWidget.componentIndex] = c;
+        
+        tempWidget.w = std::max(tempWidget.w, c->GetWidth());
+        tempWidget.h += c->GetHeight();
+        
+        tempWidget.componentIndex += 1;
+
     }
 }

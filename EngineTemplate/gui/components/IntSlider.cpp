@@ -7,7 +7,7 @@
 
 #include "IntSlider.hpp"
 
-IntSlider::IntSlider(std::string label, int* v, int min, int max){
+IntSlider::IntSlider(const std::string& label, int* v, int min, int max){
     this->label = label; 
     this->content = v;
     this->min = min;
@@ -50,9 +50,9 @@ void IntSlider::Update(int offsetX, int offsetY){
         int sliderHandleXstart = offsetX + w * getPercentageInRange();
         int sliderHandleYstart = offsetY + h + sliderPadding;
         
-        SDL_Rect* sliderHandleArea = new SDL_Rect{sliderHandleXstart, sliderHandleYstart, sliderHandleWidth, h / 2};
+        SDL_Rect sliderHandleArea {sliderHandleXstart, sliderHandleYstart, sliderHandleWidth, h / 2};
         
-        if (MathCommon::RectangleContainsPoint(sliderHandleArea, &mouse) || SliderIsBeingGrabbed()) {
+        if (MathCommon::RectangleContainsPoint(sliderHandleArea, mouse) || SliderIsBeingGrabbed()) {
             
             if (SliderIsBeingGrabbed()){
                 
@@ -65,8 +65,6 @@ void IntSlider::Update(int offsetX, int offsetY){
             
             sliderMouseGrab = mouse.x - sliderHandleXstart;
         }
-        
-        delete sliderHandleArea;
     } else {
         sliderMouseGrab = {};
     }

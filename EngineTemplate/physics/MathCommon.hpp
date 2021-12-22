@@ -12,8 +12,8 @@
 
 class MathCommon {    
 public:
-    static bool RectangleContainsPoint(SDL_Rect* rect, SDL_Point* point){
-        return point->x < rect->x + rect->w && point->x > rect->x && point->y < rect->y + rect->h && point->y > rect->y;
+    static bool RectangleContainsPoint(const SDL_Rect& rect, const SDL_Point& point){
+        return point.x < rect.x + rect.w && point.x > rect.x && point.y < rect.y + rect.h && point.y > rect.y;
     }
 };
 

@@ -8,6 +8,7 @@
 #include "Engine.hpp"
 
 bool Engine::running = true;
+bool Engine::debugMode = false;
 SDL_Window* Engine::Window = nullptr;
 SDL_Renderer* Engine::Renderer = nullptr;
 TTF_Font* Engine::font = nullptr;
@@ -17,7 +18,7 @@ SDL_Point Engine::mousePosition = SDL_Point();
 bool Engine::mouseLeftPressed = false;
 bool Engine::mouseRightPressed = false;
 
-void Engine::LogSDLError(std::ostream &os, const std::string &msg){
+void Engine::LogSDLError(std::ostream &os, const std::string &msg) {
     os << msg << " error: " << SDL_GetError() << std::endl;
 }
 
@@ -39,7 +40,12 @@ void Engine::InitSDL(){
     SDL_GL_SetSwapInterval(1); // Enable vsync
     
     SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
-    Window = SDL_CreateWindow("Sdl2 Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, window_flags);
+    Window = SDL_CreateWindow("Sdl2 Test",
+                              SDL_WINDOWPOS_CENTERED,
+                              SDL_WINDOWPOS_CENTERED,
+                              WINDOW_WIDTH,
+                              WINDOW_HEIGHT,
+                              window_flags);
     
     Renderer = SDL_CreateRenderer(Window, -1, SDL_RENDERER_ACCELERATED);
     if (Renderer == nullptr) {
@@ -64,7 +70,7 @@ void Engine::CleanupSDL(){
 
 
 
-SDL_Texture* Engine::LoadTexture(const std::string &file){
+SDL_Texture* Engine::LoadTexture(const std::string& file){
     SDL_Texture *texture = IMG_LoadTexture(Renderer, file.c_str());
     if (texture == nullptr){
         LogSDLError(std::cout, "LoadTexture");
@@ -72,9 +78,9 @@ SDL_Texture* Engine::LoadTexture(const std::string &file){
     return texture;
 }
 
-SDL_Texture* Engine::LoadTextureFromText(const char* text) {
+SDL_Texture* Engine::LoadTextureFromText(const std::string& text) {
     SDL_Color color = {255, 255, 255, 255};
-    SDL_Surface* surface = TTF_RenderText_Solid(font, text, color);
+    SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), color);
     
     SDL_Texture* tex = SDL_CreateTextureFromSurface(Renderer, surface);
     

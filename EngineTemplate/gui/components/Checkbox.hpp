@@ -23,7 +23,7 @@ protected:
     bool* content;
         
 public:
-    Checkbox(std::string label, bool* c);
+    Checkbox(const std::string& label, bool* c);
     ~Checkbox();
     
     void Update(int offsetX, int offsetY) override;

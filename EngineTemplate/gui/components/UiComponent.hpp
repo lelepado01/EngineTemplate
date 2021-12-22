@@ -16,7 +16,7 @@
 
 class UiComponent {
 protected:
-    std::string label; 
+    std::string label;
     void* content;
     int w, h;
     
@@ -35,8 +35,8 @@ public:
         std::cout << "Virtual Method Draw\n";
     };
 
-    inline int GetWidth() { return w + (int)label.length() * 20; };
-    inline int GetHeight() { return h; };
+    inline int GetWidth() const { return w + (int)label.length() * 20; };
+    inline int GetHeight() const { return h; };
     
     virtual inline bool IsSlider(){ return false; }; 
 };

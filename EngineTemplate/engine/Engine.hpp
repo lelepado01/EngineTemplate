@@ -22,6 +22,8 @@ private:
     static SDL_Window* Window;
     static bool running;
     
+    static bool debugMode;
+
     static TTF_Font* font; 
     
     static const int maxKeys = 100;
@@ -33,7 +35,6 @@ private:
 public:
     static const int WINDOW_WIDTH = 1280;
     static const int WINDOW_HEIGHT = 720;
-    static const bool DEBUG_MODE = false;
 
     static void LogSDLError(std::ostream &os, const std::string &msg);
     static void InitSDL();
@@ -46,12 +47,12 @@ public:
     
     inline static bool MouseLeftKeyIsPressed() { return mouseLeftPressed; };
     inline static bool MouseRightKeyIsPressed() { return mouseRightPressed; };
-    inline static SDL_Point GetMousePosition() { return SDL_Point{mousePosition.x * 2, mousePosition.y * 2}; };
+    inline static SDL_Point GetMousePosition() { return SDL_Point{ mousePosition.x * 2, mousePosition.y * 2}; };
     
     inline static bool IsRunning() { return running; };  
     
     static SDL_Texture* LoadTexture(const std::string &file);
-    static SDL_Texture* LoadTextureFromText(const char* text); 
+    static SDL_Texture* LoadTextureFromText(const std::string& text);
     static void RenderTexture(SDL_Texture *tex, int x, int y, int w, int h);
     static void RenderTexture(SDL_Texture *tex, int x, int y, int w, int h, double angle);
     static void DeleteTexture(SDL_Texture *tex);

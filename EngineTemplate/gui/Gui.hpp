@@ -16,6 +16,7 @@
 #include "IntSlider.hpp"
 #include "Checkbox.hpp"
 #include "Widget.hpp"
+#include "UiText.hpp"
 #include "MathCommon.hpp"
 
 class Gui {
@@ -27,22 +28,23 @@ private:
     static Widget widgets[10];
     static Widget tempWidget;
     
-    static void widgetCheckForMouseDrag(Widget* widget);
-    static void drawWidgetWindow(Widget* widget);
+    static void widgetCheckForMouseDrag(Widget& widget);
+    static void drawWidgetWindow(Widget& widget);
 
     static bool widgetIsNew(); 
     
 public:
     static void NewFrame(); 
-    static void Begin(std::string label, int x, int y);
+    static void Begin(const std::string& label, int x, int y);
     static void End();
     
     static void Update();
     static void Draw();
-        
-    static void CreateCheckbox(std::string label, bool* v);
-    static void CreateFloatSlider(std::string label, float* v, float min, float max);
-    static void CreateIntSlider(std::string label, int* v, int min, int max);
+    
+    static void CreateText(const std::string& label);
+    static void CreateCheckbox(const std::string& label, bool* v);
+    static void CreateFloatSlider(const std::string& label, float* v, float min, float max);
+    static void CreateIntSlider(const std::string& label, int* v, int min, int max);
 
 };
 

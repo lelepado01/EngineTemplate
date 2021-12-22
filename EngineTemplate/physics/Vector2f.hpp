@@ -16,25 +16,26 @@ public:
     float x, y;
     
     Vector2f();
-    Vector2f(float x, float y);
+    Vector2f(const float x, const float y);
     
-    static Vector2f Random(int r);
+    static Vector2f Random(const int r);
     
-    void Add(Vector2f v);
-    void Sub(Vector2f v);
-    void Mult(Vector2f v);
-    void Mult(float f);
-    void Div(Vector2f v);
-    void Div(float f);
+    void Add(const Vector2f& v);
+    void Sub(const Vector2f& v);
+    void Mult(const Vector2f& v);
+    void Mult(const float f);
+    void Div(const Vector2f& v);
+    void Div(const float f);
     
-    static float Cross(Vector2f v1, Vector2f v2);
-    static float Distance(Vector2f v1, Vector2f v2);
+    static float Cross(const Vector2f& v1, const Vector2f& v2);
+    static float Distance(const Vector2f& v1, const Vector2f& v2);
     
     void Normalize();
-    void Rotate(int angle);
-    int GetAngle();
-    bool operator !=(Vector2f v);
-    bool operator ==(Vector2f v);
+    void Rotate(const unsigned int angle);
+    int GetAngle() const;
+    
+    bool operator !=(const Vector2f& v);
+    bool operator ==(const Vector2f& v);
 };
 
 #endif /* Vector2f_hpp */

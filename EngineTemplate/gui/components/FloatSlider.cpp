@@ -7,7 +7,7 @@
 
 #include "FloatSlider.hpp"
 
-FloatSlider::FloatSlider(std::string label, float* v, float min, float max){
+FloatSlider::FloatSlider(const std::string& label, float* v, float min, float max){
     this->label = label; 
     this->content = v;
     this->min = min; 
@@ -65,9 +65,9 @@ void FloatSlider::Update(int offsetX, int offsetY){
         int sliderHandleXstart = offsetX + w * getPercentageInRange();
         int sliderHandleYstart = offsetY + h + sliderPadding;
         
-        SDL_Rect* sliderHandleArea = new SDL_Rect{sliderHandleXstart, sliderHandleYstart, sliderHandleWidth, h / 2};
+        SDL_Rect sliderHandleArea {sliderHandleXstart, sliderHandleYstart, sliderHandleWidth, h / 2};
         
-        if (MathCommon::RectangleContainsPoint(sliderHandleArea, &mouse) || SliderIsBeingGrabbed()) {
+        if (MathCommon::RectangleContainsPoint(sliderHandleArea, mouse) || SliderIsBeingGrabbed()) {
             
             if (SliderIsBeingGrabbed()){
                 
@@ -81,8 +81,6 @@ void FloatSlider::Update(int offsetX, int offsetY){
             
             sliderMouseGrab = mouse.x - sliderHandleXstart;
         }
-        
-        delete sliderHandleArea;
     } else {
         sliderMouseGrab = {};
     }

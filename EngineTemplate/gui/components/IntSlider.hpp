@@ -24,11 +24,9 @@ private:
     inline std::string getValueAsFormattedString(){ return std::to_string(*content); };
 
     bool updateSliderValue(int newX, int offsetX);
-
-
             
 public:
-    IntSlider(std::string label, int* c, int min, int max);
+    IntSlider(const std::string& label, int* c, int min, int max);
     ~IntSlider();
     
     void Update(int offsetX, int offsetY) override;

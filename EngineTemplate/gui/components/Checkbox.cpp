@@ -7,7 +7,7 @@
 
 #include "Checkbox.hpp"
 
-Checkbox::Checkbox(std::string label, bool* c) {
+Checkbox::Checkbox(const std::string& label, bool* c) {
     this->label = label;
     this->content = c;
     
@@ -27,13 +27,12 @@ void Checkbox::Update(int offsetX, int offsetY){
         if (!mouseHasClickedAlready){
             mouseHasClickedAlready = true;
             SDL_Point mouse = Engine::GetMousePosition();
-            SDL_Rect* checkboxContainer = new SDL_Rect{offsetX, offsetY, w, h};
+            SDL_Rect checkboxContainer {offsetX, offsetY, w, h};
             
-            if (MathCommon::RectangleContainsPoint(checkboxContainer, &mouse)){
+            if (MathCommon::RectangleContainsPoint(checkboxContainer, mouse)){
                 *content = !(*content);
             }
             
-            delete checkboxContainer;
         }
     } else {
         mouseHasClickedAlready = false;

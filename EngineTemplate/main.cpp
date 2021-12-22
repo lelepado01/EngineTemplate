@@ -35,6 +35,7 @@ int main(int, char**) {
 
         Gui::CreateCheckbox("Checkbox 2", &varbool2);
         Gui::CreateCheckbox("Checkbox 3", &varbool2);
+        Gui::CreateText("Ciao mamma");
 
         Gui::End();
 

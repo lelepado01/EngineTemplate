@@ -17,7 +17,7 @@ private:
     static float deltaTime;
 
     static std::chrono::time_point<std::chrono::steady_clock> old_time;
-    static std::chrono::time_point<std::chrono::steady_clock>  new_time;
+    static std::chrono::time_point<std::chrono::steady_clock> new_time;
 
 public:
     static float FPS();

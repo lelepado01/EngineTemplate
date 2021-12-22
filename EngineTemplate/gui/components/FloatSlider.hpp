@@ -26,7 +26,7 @@ private:
     bool updateSliderValue(int newX, int offsetX);
     
 public:
-    FloatSlider(std::string label, float* c, float min, float max);
+    FloatSlider(const std::string& label, float* c, float min, float max);
     ~FloatSlider();
     
     void Update(int offsetX, int offsetY) override;

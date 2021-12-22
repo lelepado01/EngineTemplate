@@ -10,6 +10,7 @@
 		B65E01E027314401006DF7A7 /* Slider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B65E01DE27314401006DF7A7 /* Slider.cpp */; };
 		B6862B82272D9EE2000E9508 /* IntSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6862B80272D9EE2000E9508 /* IntSlider.cpp */; };
 		B6862B86272D9EEC000E9508 /* FloatSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6862B84272D9EEC000E9508 /* FloatSlider.cpp */; };
+		B6A8D7EA27726CF300DD6FF2 /* UiText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6A8D7E827726CF300DD6FF2 /* UiText.cpp */; };
 		B6B2B84A26EA9FD1002D804E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6B2B84926EA9FD1002D804E /* main.cpp */; };
 		B6B2B85C26EAA009002D804E /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B6B2B85A26EAA009002D804E /* libSDL2-2.0.0.dylib */; };
 		B6B2B85D26EAA009002D804E /* libSDL2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B6B2B85B26EAA009002D804E /* libSDL2.dylib */; };
@@ -5256,6 +5257,8 @@
 		B698E424272E9E580008E62D /* Makefile.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
 		B698E425272E9E580008E62D /* Makefile.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
 		B698E43B272F07DA0008E62D /* MathCommon.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MathCommon.hpp; sourceTree = "<group>"; };
+		B6A8D7E827726CF300DD6FF2 /* UiText.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UiText.cpp; sourceTree = "<group>"; };
+		B6A8D7E927726CF300DD6FF2 /* UiText.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = UiText.hpp; sourceTree = "<group>"; };
 		B6B2B84626EA9FD1002D804E /* EngineTemplate */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = EngineTemplate; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6B2B84926EA9FD1002D804E /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		B6B2B85226EA9FF5002D804E /* Vector2f.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Vector2f.hpp; sourceTree = "<group>"; };
@@ -17511,8 +17514,8 @@
 			isa = PBXGroup;
 			children = (
 				B698E43B272F07DA0008E62D /* MathCommon.hpp */,
-				B6DFA4522726F9AC006395E9 /* Vector3f.cpp */,
 				B6DFA4512726F9AC006395E9 /* Vector3f.hpp */,
+				B6DFA4522726F9AC006395E9 /* Vector3f.cpp */,
 				B6B2B85226EA9FF5002D804E /* Vector2f.hpp */,
 				B6B2B85326EA9FF5002D804E /* Vector2f.cpp */,
 			);
@@ -17577,6 +17580,8 @@
 				B6862B85272D9EEC000E9508 /* FloatSlider.hpp */,
 				B65E01DE27314401006DF7A7 /* Slider.cpp */,
 				B65E01DF27314401006DF7A7 /* Slider.hpp */,
+				B6A8D7E827726CF300DD6FF2 /* UiText.cpp */,
+				B6A8D7E927726CF300DD6FF2 /* UiText.hpp */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -17616,7 +17621,7 @@
 		B6B2B83E26EA9FD1002D804E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1240;
+				LastUpgradeCheck = 1310;
 				TargetAttributes = {
 					B6B2B84526EA9FD1002D804E = {
 						CreatedOnToolsVersion = 12.4;
@@ -17656,6 +17661,7 @@
 				B6DFA4532726F9AC006395E9 /* Vector3f.cpp in Sources */,
 				B6B2B86E26EAA0DB002D804E /* Time.hpp in Sources */,
 				B6EAF605272C9233004E4664 /* Gui.cpp in Sources */,
+				B6A8D7EA27726CF300DD6FF2 /* UiText.cpp in Sources */,
 				B6B2B86F26EAA0DB002D804E /* Engine.cpp in Sources */,
 				B6EAF60C272C9539004E4664 /* Checkbox.cpp in Sources */,
 				B65E01E027314401006DF7A7 /* Slider.cpp in Sources */,
@@ -17787,6 +17793,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = EngineTemplate/EngineTemplate.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7C4DA88BK9;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -17813,6 +17820,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = EngineTemplate/EngineTemplate.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7C4DA88BK9;
 				ENABLE_HARDENED_RUNTIME = YES;

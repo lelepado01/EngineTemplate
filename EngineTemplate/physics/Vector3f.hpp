@@ -17,25 +17,26 @@ public:
     float x, y, z;
     
     Vector3f();
-    Vector3f(float x, float y, float z);
+    Vector3f(const float x, const float y, const float z);
     
-    static Vector3f Random(int r);
+    static Vector3f Random(const int r);
     
-    void Add(Vector3f v);
-    void Sub(Vector3f v);
-    void Mult(Vector3f v);
-    void Mult(float f);
-    void Div(Vector3f v);
-    void Div(float f);
+    void Add(const Vector3f& v);
+    void Sub(const Vector3f& v);
+    void Mult(const Vector3f& v);
+    void Mult(const float f);
+    void Div(const Vector3f& v);
+    void Div(const float f);
     
-    static float Cross(Vector3f v1, Vector3f v2);
-    static float Distance(Vector3f v1, Vector3f v2);
+    static float Cross(const Vector3f& v1, const Vector3f& v2);
+    static float Distance(const Vector3f& v1, const Vector3f& v2);
     
     void Normalize();
-    void Rotate(int angle);
-    int GetAngle();
-    bool operator !=(Vector3f v);
-    bool operator ==(Vector3f v);
+    void Rotate(const unsigned int angle);
+    int GetAngle() const;
+    
+    bool operator !=(const Vector3f& v);
+    bool operator ==(const Vector3f& v);
 };
 
 
