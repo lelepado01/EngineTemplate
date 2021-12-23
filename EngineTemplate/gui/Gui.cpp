@@ -14,12 +14,12 @@ bool Gui::widgetHasMovedThisFrame = false;
 Widget Gui::tempWidget = Widget{};
 Widget Gui::widgets[10];
 
-const SDL_Color windowColor = SDL_Color{100, 100, 255, 255};
+const SDL_Color windowColor = SDL_Color{0, 160, 145, 255};
 const SDL_Color topBarColor = SDL_Color{50, 50, 50, 255};
 const int topBarHeight = 50;
 
 
-void Gui::Begin(const std::string& label, int x, int y, bool moveable){
+void Gui::Begin(const std::string& label, int x, int y, bool moveable, bool resizeable){
     int initialWidgetHeight = 100;
     
     tempWidget.x = x;
@@ -27,6 +27,7 @@ void Gui::Begin(const std::string& label, int x, int y, bool moveable){
     tempWidget.w = 2 * (Widget::WidgetPadding + initialWidgetHeight);
     tempWidget.h = initialWidgetHeight;
     tempWidget.moveable = moveable;
+    tempWidget.resizeable = resizeable;
     
     if (!widgets[widgetIndex].labelTexture){
         tempWidget.labelTexture = Engine::LoadTextureFromText(label.c_str());
@@ -140,6 +141,18 @@ void Gui::drawWidgetWindow(Widget& widget){
     
     Engine::SetEngineDrawColor(windowColor.r, windowColor.g, windowColor.b, windowColor.a);
     Engine::FillRectangle(widget.x, widget.y + topBarHeight, widget.w, widget.h);
+    
+    int triangleSize = 20;
+    
+    if (widget.resizeable){
+        std::vector<SDL_Point> points = {
+            SDL_Point{widget.x + widget.w, widget.y + topBarHeight + widget.h - triangleSize},
+            SDL_Point{widget.x + widget.w, widget.y + topBarHeight + widget.h},
+            SDL_Point{widget.x + widget.w - triangleSize, widget.y + topBarHeight + widget.h}
+        };
+        Engine::SetEngineDrawColor(topBarColor.r, topBarColor.g, topBarColor.b, topBarColor.a);
+        Engine::FillPolygon(points);
+    }
     
     Engine::RenderTexture(widget.labelTexture,
                           widget.x + Widget::WidgetPadding,

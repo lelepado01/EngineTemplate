@@ -18,6 +18,8 @@ SDL_Point Engine::mousePosition = SDL_Point();
 bool Engine::mouseLeftPressed = false;
 bool Engine::mouseRightPressed = false;
 
+SDL_Color Engine::engineDrawColor = SDL_Color{0,0,0,0};
+
 void Engine::LogSDLError(std::ostream &os, const std::string &msg) {
     os << msg << " error: " << SDL_GetError() << std::endl;
 }
@@ -191,6 +193,7 @@ void Engine::DrawPixels(SDL_Point *array, int length){
 }
 
 void Engine::SetEngineDrawColor(int r, int g, int b, int a){
+    engineDrawColor = SDL_Color{(unsigned char)r, (unsigned char)g, (unsigned char)b, (unsigned char)a};
     SDL_SetRenderDrawColor(Renderer, r, g, b, a);
 }
 
@@ -200,4 +203,27 @@ void Engine::SetEngineScale(int scale){
 
 void Engine::DrawPixel(float x, float y){
     SDL_RenderDrawPoint(Renderer, x, y);
+}
+
+void Engine::DrawPolygon(const std::vector<SDL_Point> &points){
+    
+}
+
+void Engine::FillPolygon(const std::vector<SDL_Point> &points){
+    short xPoints[points.size()];
+    short yPoints[points.size()];
+    
+    for (int i =0; i < points.size(); i++) {
+        xPoints[i] = points[i].x;
+        yPoints[i] = points[i].y;
+    }
+    
+    filledPolygonRGBA(Renderer,
+                      xPoints,
+                      yPoints,
+                      (int)points.size(),
+                      engineDrawColor.r,
+                      engineDrawColor.g,
+                      engineDrawColor.b,
+                      engineDrawColor.a);
 }

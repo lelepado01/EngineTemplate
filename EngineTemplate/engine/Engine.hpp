@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <vector>
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -30,7 +31,9 @@ private:
     static int KEYS[maxKeys];
     static SDL_Point mousePosition;
     static bool mouseLeftPressed;
-    static bool mouseRightPressed; 
+    static bool mouseRightPressed;
+    
+    static SDL_Color engineDrawColor; 
     
 public:
     static const int WINDOW_WIDTH = 1280;
@@ -64,6 +67,9 @@ public:
     
     static void DrawRectangle(int x, int y, int w, int h);
     static void FillRectangle(int x, int y, int w, int h);
+    
+    static void DrawPolygon(const std::vector<SDL_Point>& points);
+    static void FillPolygon(const std::vector<SDL_Point>& points);
     
     static void DrawPixel(float x, float y);
     static void DrawPixels(SDL_Point* array, int length);

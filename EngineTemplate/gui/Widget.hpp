@@ -19,6 +19,7 @@ struct Widget {
     const static int WidgetBorder = 2;
     
     bool moveable;
+    bool resizeable; 
     
     int x, y, w, h;
     int componentIndex = 0;
