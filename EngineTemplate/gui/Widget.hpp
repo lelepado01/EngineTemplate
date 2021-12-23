@@ -18,6 +18,8 @@ struct Widget {
     const static int WidgetPadding = 15;
     const static int WidgetBorder = 2;
     
+    bool moveable;
+    
     int x, y, w, h;
     int componentIndex = 0;
     

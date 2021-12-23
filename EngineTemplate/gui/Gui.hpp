@@ -35,7 +35,7 @@ private:
     
 public:
     static void NewFrame(); 
-    static void Begin(const std::string& label, int x, int y);
+    static void Begin(const std::string& label, int x, int y, bool moveable=false);
     static void End();
     
     static void Update();

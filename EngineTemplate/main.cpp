@@ -23,8 +23,7 @@ int main(int, char**) {
         Engine::HandleEvents();
         Engine::ClearScreen(clearColor);
         
-        
-        Gui::Begin("Window 2", 100,600);
+        Gui::Begin("Window 2", 100,600, true);
         
         Gui::CreateCheckbox("Checkbox 1", &varbool1);
         Gui::CreateFloatSlider("Slider 1", &range1, 30, 80);

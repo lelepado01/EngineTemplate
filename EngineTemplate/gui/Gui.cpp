@@ -19,13 +19,14 @@ const SDL_Color topBarColor = SDL_Color{50, 50, 50, 255};
 const int topBarHeight = 50;
 
 
-void Gui::Begin(const std::string& label, int x, int y){
+void Gui::Begin(const std::string& label, int x, int y, bool moveable){
     int initialWidgetHeight = 100;
     
     tempWidget.x = x;
     tempWidget.y = y;
     tempWidget.w = 2 * (Widget::WidgetPadding + initialWidgetHeight);
     tempWidget.h = initialWidgetHeight;
+    tempWidget.moveable = moveable;
     
     if (!widgets[widgetIndex].labelTexture){
         tempWidget.labelTexture = Engine::LoadTextureFromText(label.c_str());
@@ -90,6 +91,8 @@ void Gui::Update(){
 
 
 void Gui::widgetCheckForMouseDrag(Widget& widget){
+    if (!widget.moveable) return;
+    
     if (Engine::MouseLeftKeyIsPressed()){
         SDL_Point mouse = Engine::GetMousePosition();
         SDL_Rect widgetArea {widget.x, widget.y, widget.w, topBarHeight};
