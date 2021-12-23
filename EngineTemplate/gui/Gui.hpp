@@ -29,9 +29,15 @@ private:
     static Widget tempWidget;
     
     static void widgetCheckForMouseDrag(Widget& widget);
+    static void widgetCheckForMouseResize(Widget& widget);
+    
     static void drawWidgetWindow(Widget& widget);
+    static void drawWidgetResizeTriangle(Widget& widget);
+    static void drawWidgetTopBar(Widget& widget);
 
-    static bool widgetIsNew(); 
+    static void addComponentToTempWidget(UiComponent* component); 
+    
+    static bool widgetIsNew();
     
 public:
     static void NewFrame(); 

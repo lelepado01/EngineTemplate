@@ -17,6 +17,7 @@
 struct Widget {
     const static int WidgetPadding = 15;
     const static int WidgetBorder = 2;
+    const static int ResizeTriangleSize = 20;
     
     bool moveable;
     bool resizeable; 

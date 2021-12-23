@@ -111,7 +111,12 @@ void Gui::widgetCheckForMouseDrag(Widget& widget){
     } else {
         widget.mouseGrab = {};
     }
+}
 
+void Gui::widgetCheckForMouseResize(Widget &widget){
+    if (!widget.resizeable) return;
+    
+    
 }
 
 
@@ -133,32 +138,39 @@ void Gui::Draw(){
 }
 
 void Gui::drawWidgetWindow(Widget& widget){
+    drawWidgetTopBar(widget);
+    
+    Engine::SetEngineDrawColor(windowColor.r, windowColor.g, windowColor.b, windowColor.a);
+    Engine::FillRectangle(widget.x, widget.y + topBarHeight, widget.w, widget.h);
+        
+    if (widget.resizeable){
+        drawWidgetResizeTriangle(widget);
+    }
+}
+
+void Gui::drawWidgetTopBar(Widget &widget){
     Engine::SetEngineDrawColor(topBarColor.r, topBarColor.g, topBarColor.b, topBarColor.a);
     Engine::FillRectangle(widget.x - Widget::WidgetBorder,
                           widget.y,
                           widget.w + Widget::WidgetBorder * 2,
                           topBarHeight + widget.h + Widget::WidgetBorder);
     
-    Engine::SetEngineDrawColor(windowColor.r, windowColor.g, windowColor.b, windowColor.a);
-    Engine::FillRectangle(widget.x, widget.y + topBarHeight, widget.w, widget.h);
-    
-    int triangleSize = 20;
-    
-    if (widget.resizeable){
-        std::vector<SDL_Point> points = {
-            SDL_Point{widget.x + widget.w, widget.y + topBarHeight + widget.h - triangleSize},
-            SDL_Point{widget.x + widget.w, widget.y + topBarHeight + widget.h},
-            SDL_Point{widget.x + widget.w - triangleSize, widget.y + topBarHeight + widget.h}
-        };
-        Engine::SetEngineDrawColor(topBarColor.r, topBarColor.g, topBarColor.b, topBarColor.a);
-        Engine::FillPolygon(points);
-    }
-    
     Engine::RenderTexture(widget.labelTexture,
                           widget.x + Widget::WidgetPadding,
                           widget.y,
                           topBarHeight * 3,
                           topBarHeight);
+}
+
+void Gui::drawWidgetResizeTriangle(Widget &widget){
+    std::vector<SDL_Point> points = {
+        SDL_Point{widget.x + widget.w, widget.y + topBarHeight + widget.h - Widget::ResizeTriangleSize},
+        SDL_Point{widget.x + widget.w, widget.y + topBarHeight + widget.h},
+        SDL_Point{widget.x + widget.w - Widget::ResizeTriangleSize, widget.y + topBarHeight + widget.h}
+    };
+    
+    Engine::SetEngineDrawColor(topBarColor.r, topBarColor.g, topBarColor.b, topBarColor.a);
+    Engine::FillPolygon(points);
 }
 
 void Gui::NewFrame(){
@@ -170,15 +182,19 @@ bool Gui::widgetIsNew(){
     return widgetIndex + 1 > lastFrameWidgetsCount;
 }
 
+void Gui::addComponentToTempWidget(UiComponent* component){
+    tempWidget.components[tempWidget.componentIndex] = component;
+    
+    tempWidget.w = std::max(tempWidget.w, component->GetWidth());
+    tempWidget.h += component->GetHeight();
+    
+    tempWidget.componentIndex += 1;
+}
+
 void Gui::CreateCheckbox(const std::string& label, bool *v){
     if (widgetIsNew()) {
         UiComponent* c = new Checkbox(label, v);
-        tempWidget.components[tempWidget.componentIndex] = c;
-        
-        tempWidget.w = std::max(tempWidget.w, c->GetWidth());
-        tempWidget.h += c->GetHeight();
-        
-        tempWidget.componentIndex += 1;
+        addComponentToTempWidget(c);
     }
 }
 
@@ -186,12 +202,7 @@ void Gui::CreateCheckbox(const std::string& label, bool *v){
 void Gui::CreateFloatSlider(const std::string& label, float *v, float min, float max){
     if (widgetIsNew()) {
         UiComponent* c = new FloatSlider(label, v, min, max);
-        tempWidget.components[tempWidget.componentIndex] = c;
-        
-        tempWidget.w = std::max(tempWidget.w, c->GetWidth());
-        tempWidget.h += c->GetHeight();
-        
-        tempWidget.componentIndex += 1;
+        addComponentToTempWidget(c);
     }
 }
 
@@ -199,24 +210,13 @@ void Gui::CreateFloatSlider(const std::string& label, float *v, float min, float
 void Gui::CreateIntSlider(const std::string& label, int *v, int min, int max){
     if (widgetIsNew()) {
         UiComponent* c = new IntSlider(label, v, min, max);
-        tempWidget.components[tempWidget.componentIndex] = c;
-        
-        tempWidget.w = std::max(tempWidget.w, c->GetWidth());
-        tempWidget.h += c->GetHeight();
-        
-        tempWidget.componentIndex += 1;
+        addComponentToTempWidget(c);
     }
 }
 
 void Gui::CreateText(const std::string& label){
     if (widgetIsNew()) {
         UiComponent* c = new UiText(label);
-        tempWidget.components[tempWidget.componentIndex] = c;
-        
-        tempWidget.w = std::max(tempWidget.w, c->GetWidth());
-        tempWidget.h += c->GetHeight();
-        
-        tempWidget.componentIndex += 1;
-
+        addComponentToTempWidget(c);
     }
 }
