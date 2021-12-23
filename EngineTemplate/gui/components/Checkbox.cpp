@@ -19,7 +19,6 @@ Checkbox::Checkbox(const std::string& label, bool* c) {
 
 Checkbox::~Checkbox(){
     Engine::DeleteTexture(labelTexture);
-    delete &label;
 }
 
 void Checkbox::Update(int offsetX, int offsetY){

@@ -10,18 +10,15 @@
 int Gui::widgetIndex = 0;
 int Gui::lastFrameWidgetsCount = 0;
 bool Gui::widgetHasMovedThisFrame = false;
+bool Gui::widgetSliderIsBeingDragged = false; 
 
 Widget Gui::tempWidget = Widget{};
-Widget Gui::widgets[10];
+std::vector<Widget> Gui::widgets = std::vector<Widget>(10);
 
 const SDL_Color windowColor = SDL_Color{0, 160, 145, 255};
 const SDL_Color topBarColor = SDL_Color{50, 50, 50, 255};
-const int topBarHeight = 50;
-
 
 void Gui::Begin(const std::string& label, int x, int y, bool moveable, bool resizeable){
-    int initialWidgetHeight = 100;
-    
     tempWidget.x = x;
     tempWidget.y = y;
     tempWidget.w = 2 * (Widget::WidgetPadding + initialWidgetHeight);
@@ -42,41 +39,35 @@ void Gui::End(){
     }
     
     widgetIndex += 1;
-
     tempWidget = {};
 }
 
 
 void Gui::Update(){
     
-    bool sliderIsBeingDragged = false;
-    for (int i = 0; i < widgetIndex; i++) {
-        for (int j = 0; j < widgets[i].componentIndex; j++) {
+    widgetSliderIsBeingDragged = false;
+    widgetHasMovedThisFrame = false;
 
-            if (widgets[i].components[j]->IsSlider()){
-                
-                Slider* slider = (Slider*) widgets[i].components[j];
-                if (slider->SliderIsBeingGrabbed()) {
-                    sliderIsBeingDragged = true;
-                    break;
-                }
-            }
-        }
-        if (sliderIsBeingDragged) break;
+    /// Check sliders
+    for (int i = 0; i < widgetIndex; i++) {
+        widgetSliderIsBeingDragged = checkWidgetForSliderGrab(widgets[i]);
+        if (widgetSliderIsBeingDragged) break;
     }
     
-    if(!sliderIsBeingDragged){
-        widgetHasMovedThisFrame = false;
+    /// Check for widget already  being dragged
+    if(!widgetSliderIsBeingDragged){
+        
         for (int i = 0; i < widgetIndex; i++) {
             if (widgets[i].isBeingGrabbed()){
-                widgetCheckForMouseDrag(widgets[i]);
+                checkWidgetForMouseDrag(widgets[i]);
                 break;
             }
         }
     }
-        
+    
+    /// Check for new drags
     for (int i = 0; i < widgetIndex; i++) {
-        if (!sliderIsBeingDragged && !widgetHasMovedThisFrame) widgetCheckForMouseDrag(widgets[i]);
+        if (!widgetSliderIsBeingDragged && !widgetHasMovedThisFrame) checkWidgetForMouseDrag(widgets[i]);
         
         int componentsOffsetY = 0;
         for (int j = 0; j < widgets[i].componentIndex; j++) {
@@ -90,8 +81,22 @@ void Gui::Update(){
     }
 }
 
+bool Gui::checkWidgetForSliderGrab(Widget &widget){
+    for (int j = 0; j < widget.componentIndex; j++) {
 
-void Gui::widgetCheckForMouseDrag(Widget& widget){
+        if (widget.components[j]->GetType() == ComponentType::SliderType){
+            
+            Slider* slider = (Slider*) widget.components[j];
+            if (slider->SliderIsBeingGrabbed()) {
+                return true;
+            }
+        }
+    }
+    
+    return false;
+}
+
+void Gui::checkWidgetForMouseDrag(Widget& widget){
     if (!widget.moveable) return;
     
     if (Engine::MouseLeftKeyIsPressed()){
@@ -113,7 +118,7 @@ void Gui::widgetCheckForMouseDrag(Widget& widget){
     }
 }
 
-void Gui::widgetCheckForMouseResize(Widget &widget){
+void Gui::checkWidgetForMouseResize(Widget &widget){
     if (!widget.resizeable) return;
     
     

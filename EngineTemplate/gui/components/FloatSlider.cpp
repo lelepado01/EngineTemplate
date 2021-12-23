@@ -23,7 +23,6 @@ FloatSlider::FloatSlider(const std::string& label, float* v, float min, float ma
 FloatSlider::~FloatSlider(){
     Engine::DeleteTexture(labelTexture);
     Engine::DeleteTexture(valueTexture);
-    delete &label;
 }
 
 std::string FloatSlider::getValueAsFormattedString(){

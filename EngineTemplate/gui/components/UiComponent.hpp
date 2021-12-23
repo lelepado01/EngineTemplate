@@ -14,6 +14,13 @@
 
 #include "MathCommon.hpp"
 
+enum ComponentType{
+    EmptyType,
+    CheckboxType,
+    SliderType,
+    TextType
+};
+
 class UiComponent {
 protected:
     std::string label;
@@ -38,7 +45,7 @@ public:
     inline int GetWidth() const { return w + (int)label.length() * 20; };
     inline int GetHeight() const { return h; };
     
-    virtual inline bool IsSlider(){ return false; }; 
+    virtual inline ComponentType GetType(){ return ComponentType::EmptyType; }; 
 };
 
 #endif /* UiComponent_hpp */

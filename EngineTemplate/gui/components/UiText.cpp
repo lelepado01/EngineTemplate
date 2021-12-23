@@ -18,7 +18,6 @@ UiText::UiText(const std::string& label){
 
 UiText::~UiText(){
     Engine::DeleteTexture(labelTexture);
-    delete &label;
 }
 
 void UiText::Draw(int offsetX, int offsetY){

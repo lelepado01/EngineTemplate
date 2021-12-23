@@ -31,7 +31,8 @@ public:
     void Draw(int offsetX, int offsetY) override {};
     
     inline bool SliderIsBeingGrabbed() { return sliderMouseGrab.has_value(); };
-    inline bool IsSlider() override { return true; };
+    
+    inline ComponentType GetType() override { return ComponentType::SliderType; };
 };
 
 #endif /* Slider_hpp */

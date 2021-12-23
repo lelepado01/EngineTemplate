@@ -24,6 +24,7 @@ public:
     void Update(int offsetX, int offsetY) override {};
     void Draw(int offsetX, int offsetY) override;
 
+    inline ComponentType GetType() override { return ComponentType::TextType; };
 };
 
 #endif /* UiText_hpp */

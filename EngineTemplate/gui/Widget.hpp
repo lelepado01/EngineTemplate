@@ -27,7 +27,7 @@ struct Widget {
     
     SDL_Texture* labelTexture; 
     
-    UiComponent* components[10];
+    std::vector<UiComponent*> components = std::vector<UiComponent*>(10);
     
     std::optional<SDL_Point> mouseGrab = {};
     

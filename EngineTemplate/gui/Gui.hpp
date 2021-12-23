@@ -21,15 +21,20 @@
 
 class Gui {
 private:
+    static const int topBarHeight = 50;
+    static const int initialWidgetHeight = 100;
+
     static int widgetIndex;
     static int lastFrameWidgetsCount;
-    static bool widgetHasMovedThisFrame; 
-    
-    static Widget widgets[10];
+    static bool widgetHasMovedThisFrame;
+    static bool widgetSliderIsBeingDragged;
+
+    static std::vector<Widget> widgets;
     static Widget tempWidget;
     
-    static void widgetCheckForMouseDrag(Widget& widget);
-    static void widgetCheckForMouseResize(Widget& widget);
+    static void checkWidgetForMouseDrag(Widget& widget);
+    static void checkWidgetForMouseResize(Widget& widget);
+    static bool checkWidgetForSliderGrab(Widget& widget);
     
     static void drawWidgetWindow(Widget& widget);
     static void drawWidgetResizeTriangle(Widget& widget);
