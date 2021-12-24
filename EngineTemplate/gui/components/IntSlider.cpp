@@ -14,7 +14,7 @@ IntSlider::IntSlider(const std::string& label, int* v, int min, int max){
     this->max = max;
     
     this->w = 300;
-    this->h = 50;
+    this->h = 80;
     
     this->labelTexture = Engine::LoadTextureFromText(label.c_str());
     this->valueTexture = Engine::LoadTextureFromText(getValueAsFormattedString().c_str());

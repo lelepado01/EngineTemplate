@@ -21,7 +21,6 @@
 
 class Gui {
 private:
-    static const int topBarHeight = 50;
     static const int initialWidgetHeight = 100;
 
     static int widgetIndex;
@@ -37,12 +36,13 @@ private:
     static bool checkWidgetForMouseDrag(Widget& widget);
     static bool checkWidgetForMouseResize(Widget& widget);
     static bool checkWidgetForSliderGrab(Widget& widget);
+    
     static void updateWidgetComponents(Widget& widget);
 
-    static void drawWidgetWindow(Widget& widget);
-    static void drawWidgetResizeTriangle(Widget& widget);
-    static void drawWidgetTopBar(Widget& widget);
-    
+    static void handleWidgetsResize();
+    static void handleWidgetsMove();
+    static void handleWidgetsSliders(); 
+        
     static bool widgetIsNew();
     
 public:

@@ -13,12 +13,8 @@ bool Gui::widgetIsBeingMoved = false;
 bool Gui::widgetIsBeingResized = false;
 bool Gui::widgetSliderIsBeingDragged = false;
 
-
 Widget Gui::tempWidget = Widget{};
 std::vector<Widget> Gui::widgets = std::vector<Widget>(10);
-
-const SDL_Color windowColor = SDL_Color{0, 160, 145, 255};
-const SDL_Color topBarColor = SDL_Color{50, 50, 50, 255};
 
 void Gui::Begin(const std::string& label, int x, int y, bool moveable, bool resizeable){
     tempWidget.x = x;
@@ -51,7 +47,18 @@ void Gui::Update(){
     
     widgetSliderIsBeingDragged = false;
     
-    /// Check for widget dragged
+    handleWidgetsMove();
+    handleWidgetsResize();
+    handleWidgetsSliders();
+    
+    if (widgetIsBeingMoved || widgetIsBeingResized || widgetSliderIsBeingDragged) return;
+
+    for (int i = 0; i < widgetIndex; i++) {
+        updateWidgetComponents(widgets[i]);
+    }
+}
+
+void Gui::handleWidgetsMove(){
     for (int i = 0; i < widgetIndex; i++) {
         if (widgetSliderIsBeingDragged || widgetIsBeingResized) break;
         if (widgets[i].isBeingResized() || widgets[i].isBeingInteractedWith()) continue;
@@ -61,8 +68,9 @@ void Gui::Update(){
             if(widgetIsBeingMoved) break;
         }
     }
+}
 
-    /// Check for widget resize
+void Gui::handleWidgetsResize(){
     for (int i = 0; i < widgetIndex; i++) {
         if (widgetSliderIsBeingDragged || widgetIsBeingMoved) break;
         if (widgets[i].isBeingMoved() || widgets[i].isBeingInteractedWith()) continue;
@@ -72,8 +80,9 @@ void Gui::Update(){
             if (widgetIsBeingResized) break;
         }
     }
-    
-    /// Check sliders
+}
+
+void Gui::handleWidgetsSliders(){
     for (int i = 0; i < widgetIndex; i++) {
         if (widgetIsBeingMoved || widgetIsBeingResized) break;
         if (widgets[i].isBeingResized() || widgets[i].isBeingMoved()) continue;
@@ -85,12 +94,6 @@ void Gui::Update(){
                 break;}
         }
     }
-    
-    /// Update all widgets
-    if (widgetIsBeingMoved || widgetIsBeingResized || widgetSliderIsBeingDragged) return;
-    for (int i = 0; i < widgetIndex; i++) {
-        updateWidgetComponents(widgets[i]);
-    }
 }
 
 void Gui::updateWidgetComponents(Widget& widget){
@@ -98,7 +101,7 @@ void Gui::updateWidgetComponents(Widget& widget){
     for (int j = 0; j < widget.componentIndex; j++) {
         
         int offsetX = widget.x + Widget::WidgetPadding;
-        int offsetY = widget.y + topBarHeight + componentsOffsetY + Widget::WidgetPadding * (j+1);
+        int offsetY = widget.y + Widget::TopBarHeight + componentsOffsetY + Widget::WidgetPadding * (j+1);
         widget.components[j]->Update(offsetX, offsetY);
 
         componentsOffsetY += widget.components[j]->GetHeight();
@@ -125,7 +128,7 @@ bool Gui::checkWidgetForMouseDrag(Widget& widget){
     
     if (Engine::MouseLeftKeyIsPressed()){
         SDL_Point mouse = Engine::GetMousePosition();
-        SDL_Rect widgetArea {widget.x, widget.y, widget.w, topBarHeight};
+        SDL_Rect widgetArea {widget.x, widget.y, widget.w, Widget::TopBarHeight};
         
         if (MathCommon::RectangleContainsPoint(widgetArea, mouse) || widget.isBeingMoved()) {
             
@@ -153,7 +156,7 @@ bool Gui::checkWidgetForMouseResize(Widget &widget){
         SDL_Point mouse = Engine::GetMousePosition();
         SDL_Rect resizeArea {
             widget.x + widget.w - Widget::ResizeTriangleSize,
-            widget.y + topBarHeight + widget.h - Widget::ResizeTriangleSize,
+            widget.y + Widget::TopBarHeight + widget.h - Widget::ResizeTriangleSize,
             Widget::ResizeTriangleSize,
             Widget::ResizeTriangleSize
         };
@@ -183,59 +186,10 @@ bool Gui::checkWidgetForMouseResize(Widget &widget){
     return false;
 }
 
-
-
 void Gui::Draw(){
     for (int i = 0; i < widgetIndex; i++) {
-        
-        drawWidgetWindow(widgets[i]);
-        
-        int componentsOffsetY = 0;
-        for (int j = 0; j < widgets[i].componentIndex; j++) {
-            int offsetX = widgets[i].x + Widget::WidgetPadding;
-            int offsetY = widgets[i].y + Widget::WidgetPadding + topBarHeight + componentsOffsetY;
-            
-            widgets[i].components[j]->Draw(offsetX, offsetY);
-            
-            componentsOffsetY += widgets[i].components[j]->GetHeight() + Widget::WidgetPadding;
-        }
+        widgets[i].Draw();
     }
-}
-
-void Gui::drawWidgetWindow(Widget& widget){
-    drawWidgetTopBar(widget);
-    
-    Engine::SetEngineDrawColor(windowColor.r, windowColor.g, windowColor.b, windowColor.a);
-    Engine::FillRectangle(widget.x, widget.y + topBarHeight, widget.w, widget.h);
-        
-    if (widget.resizeable){
-        drawWidgetResizeTriangle(widget);
-    }
-}
-
-void Gui::drawWidgetTopBar(Widget &widget){
-    Engine::SetEngineDrawColor(topBarColor.r, topBarColor.g, topBarColor.b, topBarColor.a);
-    Engine::FillRectangle(widget.x - Widget::WidgetBorder,
-                          widget.y,
-                          widget.w + Widget::WidgetBorder * 2,
-                          topBarHeight + widget.h + Widget::WidgetBorder);
-    
-    Engine::RenderTexture(widget.labelTexture,
-                          widget.x + Widget::WidgetPadding,
-                          widget.y,
-                          topBarHeight * 3,
-                          topBarHeight);
-}
-
-void Gui::drawWidgetResizeTriangle(Widget &widget){
-    std::vector<SDL_Point> points = {
-        SDL_Point{widget.x + widget.w, widget.y + topBarHeight + widget.h - Widget::ResizeTriangleSize},
-        SDL_Point{widget.x + widget.w, widget.y + topBarHeight + widget.h},
-        SDL_Point{widget.x + widget.w - Widget::ResizeTriangleSize, widget.y + topBarHeight + widget.h}
-    };
-    
-    Engine::SetEngineDrawColor(topBarColor.r, topBarColor.g, topBarColor.b, topBarColor.a);
-    Engine::FillPolygon(points);
 }
 
 void Gui::NewFrame(){

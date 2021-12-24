@@ -14,7 +14,7 @@ FloatSlider::FloatSlider(const std::string& label, float* v, float min, float ma
     this->max = max;
     
     this->w = 400;
-    this->h = 50;
+    this->h = 80;
     
     this->labelTexture = Engine::LoadTextureFromText(label.c_str());
     this->valueTexture = Engine::LoadTextureFromText(getValueAsFormattedString().c_str());
@@ -42,19 +42,19 @@ std::string FloatSlider::getValueAsFormattedString(){
 void FloatSlider::Draw(int offsetX, int offsetY){
     
     int labelWidth = textLetterSize * (int)label.length();
-    Engine::RenderTexture(labelTexture, offsetX, offsetY, labelWidth, h);
+    Engine::RenderTexture(labelTexture, offsetX, offsetY, labelWidth, sliderHeight);
     Engine::RenderTexture(valueTexture,
                           offsetX + w + textPadding,
                           offsetY,
                           textLetterSize * (int)getValueAsFormattedString().length(),
-                          h);
+                          sliderHeight);
     
     Engine::SetEngineDrawColor(50, 50, 50, 255);
-    Engine::FillRectangle(offsetX, offsetY + h + sliderPadding, w + sliderHandleWidth, h / 2);
+    Engine::FillRectangle(offsetX, offsetY + sliderHeight + sliderPadding, w + sliderHandleWidth, sliderHeight / 2);
     
     int xstart = offsetX + w * getPercentageInRange();
     Engine::SetEngineDrawColor(255, 255, 255, 255);
-    Engine::FillRectangle(xstart, offsetY + h + sliderPadding, sliderHandleWidth, h / 2);
+    Engine::FillRectangle(xstart, offsetY + sliderHeight + sliderPadding, sliderHandleWidth, sliderHeight / 2);
 }
 
 void FloatSlider::Update(int offsetX, int offsetY){
@@ -62,9 +62,9 @@ void FloatSlider::Update(int offsetX, int offsetY){
         SDL_Point mouse = Engine::GetMousePosition();
         
         int sliderHandleXstart = offsetX + w * getPercentageInRange();
-        int sliderHandleYstart = offsetY + h + sliderPadding;
+        int sliderHandleYstart = offsetY + sliderHeight + sliderPadding;
         
-        SDL_Rect sliderHandleArea {sliderHandleXstart, sliderHandleYstart, sliderHandleWidth, h / 2};
+        SDL_Rect sliderHandleArea {sliderHandleXstart, sliderHandleYstart, sliderHandleWidth, sliderHeight / 2};
         
         if (MathCommon::RectangleContainsPoint(sliderHandleArea, mouse) || SliderIsBeingGrabbed()) {
             

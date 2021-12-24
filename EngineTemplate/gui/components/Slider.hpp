@@ -21,7 +21,8 @@ protected:
     
     const int sliderPadding = 5;
     const int sliderHandleWidth = 30;
-    
+    const int sliderHeight = 50;
+
     SDL_Texture* valueTexture;
     
     std::optional<float> sliderMouseGrab;
