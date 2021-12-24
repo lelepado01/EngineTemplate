@@ -26,21 +26,22 @@ private:
 
     static int widgetIndex;
     static int lastFrameWidgetsCount;
-    static bool widgetHasMovedThisFrame;
+    
+    static bool widgetIsBeingMoved;
+    static bool widgetIsBeingResized;
     static bool widgetSliderIsBeingDragged;
 
     static std::vector<Widget> widgets;
     static Widget tempWidget;
     
-    static void checkWidgetForMouseDrag(Widget& widget);
-    static void checkWidgetForMouseResize(Widget& widget);
+    static bool checkWidgetForMouseDrag(Widget& widget);
+    static bool checkWidgetForMouseResize(Widget& widget);
     static bool checkWidgetForSliderGrab(Widget& widget);
-    
+    static void updateWidgetComponents(Widget& widget);
+
     static void drawWidgetWindow(Widget& widget);
     static void drawWidgetResizeTriangle(Widget& widget);
     static void drawWidgetTopBar(Widget& widget);
-
-    static void addComponentToTempWidget(UiComponent* component); 
     
     static bool widgetIsNew();
     

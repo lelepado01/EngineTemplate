@@ -9,8 +9,10 @@
 
 int Gui::widgetIndex = 0;
 int Gui::lastFrameWidgetsCount = 0;
-bool Gui::widgetHasMovedThisFrame = false;
-bool Gui::widgetSliderIsBeingDragged = false; 
+bool Gui::widgetIsBeingMoved = false;
+bool Gui::widgetIsBeingResized = false;
+bool Gui::widgetSliderIsBeingDragged = false;
+
 
 Widget Gui::tempWidget = Widget{};
 std::vector<Widget> Gui::widgets = std::vector<Widget>(10);
@@ -23,6 +25,8 @@ void Gui::Begin(const std::string& label, int x, int y, bool moveable, bool resi
     tempWidget.y = y;
     tempWidget.w = 2 * (Widget::WidgetPadding + initialWidgetHeight);
     tempWidget.h = initialWidgetHeight;
+    tempWidget.minWidth = tempWidget.w;
+    tempWidget.minHeight = tempWidget.h;
     tempWidget.moveable = moveable;
     tempWidget.resizeable = resizeable;
     
@@ -30,7 +34,7 @@ void Gui::Begin(const std::string& label, int x, int y, bool moveable, bool resi
         tempWidget.labelTexture = Engine::LoadTextureFromText(label.c_str());
     }
     
-    tempWidget.mouseGrab = {};
+    tempWidget.mouseMoveGrab = {};
 }
 
 void Gui::End(){
@@ -46,38 +50,58 @@ void Gui::End(){
 void Gui::Update(){
     
     widgetSliderIsBeingDragged = false;
-    widgetHasMovedThisFrame = false;
+    
+    /// Check for widget dragged
+    for (int i = 0; i < widgetIndex; i++) {
+        if (widgetSliderIsBeingDragged || widgetIsBeingResized) break;
+        if (widgets[i].isBeingResized() || widgets[i].isBeingInteractedWith()) continue;
 
+        if (!widgetIsBeingMoved || (widgetIsBeingMoved && widgets[i].isBeingMoved())){
+            widgetIsBeingMoved = checkWidgetForMouseDrag(widgets[i]);
+            if(widgetIsBeingMoved) break;
+        }
+    }
+
+    /// Check for widget resize
+    for (int i = 0; i < widgetIndex; i++) {
+        if (widgetSliderIsBeingDragged || widgetIsBeingMoved) break;
+        if (widgets[i].isBeingMoved() || widgets[i].isBeingInteractedWith()) continue;
+
+        if (!widgetIsBeingResized || (widgetIsBeingResized && widgets[i].isBeingResized())){
+            widgetIsBeingResized = checkWidgetForMouseResize(widgets[i]);
+            if (widgetIsBeingResized) break;
+        }
+    }
+    
     /// Check sliders
     for (int i = 0; i < widgetIndex; i++) {
-        widgetSliderIsBeingDragged = checkWidgetForSliderGrab(widgets[i]);
-        if (widgetSliderIsBeingDragged) break;
-    }
-    
-    /// Check for widget already  being dragged
-    if(!widgetSliderIsBeingDragged){
+        if (widgetIsBeingMoved || widgetIsBeingResized) break;
+        if (widgets[i].isBeingResized() || widgets[i].isBeingMoved()) continue;
         
-        for (int i = 0; i < widgetIndex; i++) {
-            if (widgets[i].isBeingGrabbed()){
-                checkWidgetForMouseDrag(widgets[i]);
-                break;
-            }
+        if (!widgetSliderIsBeingDragged || (widgetSliderIsBeingDragged && widgets[i].isBeingInteractedWith())){
+            widgetSliderIsBeingDragged = checkWidgetForSliderGrab(widgets[i]);
+            if (widgetSliderIsBeingDragged) {
+                updateWidgetComponents(widgets[i]);
+                break;}
         }
     }
     
-    /// Check for new drags
+    /// Update all widgets
+    if (widgetIsBeingMoved || widgetIsBeingResized || widgetSliderIsBeingDragged) return;
     for (int i = 0; i < widgetIndex; i++) {
-        if (!widgetSliderIsBeingDragged && !widgetHasMovedThisFrame) checkWidgetForMouseDrag(widgets[i]);
-        
-        int componentsOffsetY = 0;
-        for (int j = 0; j < widgets[i].componentIndex; j++) {
-            
-            int offsetX = widgets[i].x + Widget::WidgetPadding;
-            int offsetY = widgets[i].y + topBarHeight + componentsOffsetY + Widget::WidgetPadding * (j+1);
-            widgets[i].components[j]->Update(offsetX, offsetY);
+        updateWidgetComponents(widgets[i]);
+    }
+}
 
-            componentsOffsetY += widgets[i].components[j]->GetHeight();
-        }
+void Gui::updateWidgetComponents(Widget& widget){
+    int componentsOffsetY = 0;
+    for (int j = 0; j < widget.componentIndex; j++) {
+        
+        int offsetX = widget.x + Widget::WidgetPadding;
+        int offsetY = widget.y + topBarHeight + componentsOffsetY + Widget::WidgetPadding * (j+1);
+        widget.components[j]->Update(offsetX, offsetY);
+
+        componentsOffsetY += widget.components[j]->GetHeight();
     }
 }
 
@@ -96,33 +120,69 @@ bool Gui::checkWidgetForSliderGrab(Widget &widget){
     return false;
 }
 
-void Gui::checkWidgetForMouseDrag(Widget& widget){
-    if (!widget.moveable) return;
+bool Gui::checkWidgetForMouseDrag(Widget& widget){
+    if (!widget.moveable) return false;
     
     if (Engine::MouseLeftKeyIsPressed()){
         SDL_Point mouse = Engine::GetMousePosition();
         SDL_Rect widgetArea {widget.x, widget.y, widget.w, topBarHeight};
         
-        if (MathCommon::RectangleContainsPoint(widgetArea, mouse) || widget.isBeingGrabbed()) {
+        if (MathCommon::RectangleContainsPoint(widgetArea, mouse) || widget.isBeingMoved()) {
             
-            if (widget.isBeingGrabbed()){
-                widget.x = mouse.x - widget.mouseGrab.value().x;
-                widget.y = mouse.y - widget.mouseGrab.value().y;
-                widgetHasMovedThisFrame = true;
+            if (widget.isBeingMoved()){
+                widget.x = mouse.x - widget.mouseMoveGrab.value().x;
+                widget.y = mouse.y - widget.mouseMoveGrab.value().y;
+                widgetIsBeingMoved = true;
             }
             
-            widget.mouseGrab = SDL_Point{ mouse.x - widget.x , mouse.y - widget.y };
+            widget.mouseMoveGrab = SDL_Point{ mouse.x - widget.x , mouse.y - widget.y };
+            
+            return true;
         }
     } else {
-        widget.mouseGrab = {};
+        widget.mouseMoveGrab = {};
     }
+    
+    return false;
 }
 
-void Gui::checkWidgetForMouseResize(Widget &widget){
-    if (!widget.resizeable) return;
+bool Gui::checkWidgetForMouseResize(Widget &widget){
+    if (!widget.resizeable) return false;
     
+    if (Engine::MouseLeftKeyIsPressed()){
+        SDL_Point mouse = Engine::GetMousePosition();
+        SDL_Rect resizeArea {
+            widget.x + widget.w - Widget::ResizeTriangleSize,
+            widget.y + topBarHeight + widget.h - Widget::ResizeTriangleSize,
+            Widget::ResizeTriangleSize,
+            Widget::ResizeTriangleSize
+        };
+        
+        if (MathCommon::RectangleContainsPoint(resizeArea, mouse) || widget.isBeingResized()) {
+            
+            if (widget.isBeingResized()){
+                widget.w = mouse.x - widget.mouseResizeGrab.value().x;
+                widget.h = mouse.y - widget.mouseResizeGrab.value().y;
+                
+                widgetIsBeingResized = true;
+            }
+            
+            if (widget.w < widget.minWidth || widget.h < widget.minHeight){
+                if (widget.w < widget.minWidth) widget.w = widget.minWidth;
+                if (widget.h < widget.minHeight) widget.h = widget.minHeight;
+            } else {
+                widget.mouseResizeGrab = SDL_Point{ mouse.x - widget.w , mouse.y - widget.h };
+            }
+            
+            return true;
+        }
+    } else {
+        widget.mouseResizeGrab = {};
+    }
     
+    return false;
 }
+
 
 
 void Gui::Draw(){
@@ -187,41 +247,30 @@ bool Gui::widgetIsNew(){
     return widgetIndex + 1 > lastFrameWidgetsCount;
 }
 
-void Gui::addComponentToTempWidget(UiComponent* component){
-    tempWidget.components[tempWidget.componentIndex] = component;
-    
-    tempWidget.w = std::max(tempWidget.w, component->GetWidth());
-    tempWidget.h += component->GetHeight();
-    
-    tempWidget.componentIndex += 1;
-}
-
 void Gui::CreateCheckbox(const std::string& label, bool *v){
     if (widgetIsNew()) {
         UiComponent* c = new Checkbox(label, v);
-        addComponentToTempWidget(c);
+        tempWidget.addComponent(c);
     }
 }
-
 
 void Gui::CreateFloatSlider(const std::string& label, float *v, float min, float max){
     if (widgetIsNew()) {
         UiComponent* c = new FloatSlider(label, v, min, max);
-        addComponentToTempWidget(c);
+        tempWidget.addComponent(c);
     }
 }
-
 
 void Gui::CreateIntSlider(const std::string& label, int *v, int min, int max){
     if (widgetIsNew()) {
         UiComponent* c = new IntSlider(label, v, min, max);
-        addComponentToTempWidget(c);
+        tempWidget.addComponent(c);
     }
 }
 
 void Gui::CreateText(const std::string& label){
     if (widgetIsNew()) {
         UiComponent* c = new UiText(label);
-        addComponentToTempWidget(c);
+        tempWidget.addComponent(c);
     }
 }

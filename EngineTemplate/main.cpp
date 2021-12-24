@@ -14,7 +14,8 @@ int main(int, char**) {
     bool varbool1 = false;
     bool varbool2 = true;
     float range1 = 75;
-    
+    float range2 = 75;
+
     while (Engine::IsRunning()) {
         Time::Count();
         
@@ -30,10 +31,12 @@ int main(int, char**) {
 
         Gui::End();
 
-        Gui::Begin("Window 1", 100,100);
+        Gui::Begin("Window 1", 100,100, true, true);
 
         Gui::CreateCheckbox("Checkbox 2", &varbool2);
         Gui::CreateCheckbox("Checkbox 3", &varbool2);
+        Gui::CreateFloatSlider("Slider 1", &range2, 30, 80);
+
         Gui::CreateText("Ciao mamma");
 
         Gui::End();
