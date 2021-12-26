@@ -11,6 +11,7 @@
 		B6862B82272D9EE2000E9508 /* IntSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6862B80272D9EE2000E9508 /* IntSlider.cpp */; };
 		B6862B86272D9EEC000E9508 /* FloatSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6862B84272D9EEC000E9508 /* FloatSlider.cpp */; };
 		B6A8D7EA27726CF300DD6FF2 /* UiText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6A8D7E827726CF300DD6FF2 /* UiText.cpp */; };
+		B6B07E7627778AFE0067BD7F /* UiTextWithValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6B07E7427778AFE0067BD7F /* UiTextWithValue.cpp */; };
 		B6B2B84A26EA9FD1002D804E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6B2B84926EA9FD1002D804E /* main.cpp */; };
 		B6B2B85C26EAA009002D804E /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B6B2B85A26EAA009002D804E /* libSDL2-2.0.0.dylib */; };
 		B6B2B85D26EAA009002D804E /* libSDL2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B6B2B85B26EAA009002D804E /* libSDL2.dylib */; };
@@ -5259,6 +5260,8 @@
 		B698E43B272F07DA0008E62D /* MathCommon.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MathCommon.hpp; sourceTree = "<group>"; };
 		B6A8D7E827726CF300DD6FF2 /* UiText.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UiText.cpp; sourceTree = "<group>"; };
 		B6A8D7E927726CF300DD6FF2 /* UiText.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = UiText.hpp; sourceTree = "<group>"; };
+		B6B07E7427778AFE0067BD7F /* UiTextWithValue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UiTextWithValue.cpp; sourceTree = "<group>"; };
+		B6B07E7527778AFE0067BD7F /* UiTextWithValue.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = UiTextWithValue.hpp; sourceTree = "<group>"; };
 		B6B2B84626EA9FD1002D804E /* EngineTemplate */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = EngineTemplate; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6B2B84926EA9FD1002D804E /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		B6B2B85226EA9FF5002D804E /* Vector2f.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Vector2f.hpp; sourceTree = "<group>"; };
@@ -17582,6 +17585,8 @@
 				B65E01DF27314401006DF7A7 /* Slider.hpp */,
 				B6A8D7E827726CF300DD6FF2 /* UiText.cpp */,
 				B6A8D7E927726CF300DD6FF2 /* UiText.hpp */,
+				B6B07E7427778AFE0067BD7F /* UiTextWithValue.cpp */,
+				B6B07E7527778AFE0067BD7F /* UiTextWithValue.hpp */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -17658,6 +17663,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B6B2B86D26EAA0DB002D804E /* Engine.hpp in Sources */,
+				B6B07E7627778AFE0067BD7F /* UiTextWithValue.cpp in Sources */,
 				B6DFA4532726F9AC006395E9 /* Vector3f.cpp in Sources */,
 				B6B2B86E26EAA0DB002D804E /* Time.hpp in Sources */,
 				B6EAF605272C9233004E4664 /* Gui.cpp in Sources */,

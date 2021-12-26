@@ -18,7 +18,8 @@ enum ComponentType{
     EmptyType,
     CheckboxType,
     SliderType,
-    TextType
+    TextType,
+    TextWithValueType
 };
 
 class UiComponent {

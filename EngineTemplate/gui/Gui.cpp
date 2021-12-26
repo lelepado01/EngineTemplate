@@ -228,3 +228,10 @@ void Gui::CreateText(const std::string& label){
         tempWidget.addComponent(c);
     }
 }
+
+void Gui::CreateTextWithValue(const std::string &label, float* v){
+    if (widgetIsNew()) {
+        UiComponent* c = new UiTextWithValue(label, v);
+        tempWidget.addComponent(c); 
+    }
+}

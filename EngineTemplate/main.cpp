@@ -16,6 +16,7 @@ int main(int, char**) {
     float range1 = 75;
     float range2 = 75;
 
+    float fps = 0;
     while (Engine::IsRunning()) {
         Time::Count();
         
@@ -38,6 +39,8 @@ int main(int, char**) {
         Gui::CreateFloatSlider("Slider 1", &range2, 30, 80);
 
         Gui::CreateText("Ciao mamma");
+        fps = (int)Time::FPS();
+        Gui::CreateTextWithValue("Ciao mamma", &fps);
 
         Gui::End();
 

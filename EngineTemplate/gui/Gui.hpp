@@ -17,6 +17,7 @@
 #include "Checkbox.hpp"
 #include "Widget.hpp"
 #include "UiText.hpp"
+#include "UiTextWithValue.hpp"
 #include "MathCommon.hpp"
 
 class Gui {
@@ -54,6 +55,7 @@ public:
     static void Draw();
     
     static void CreateText(const std::string& label);
+    static void CreateTextWithValue(const std::string& label, float* v);
     static void CreateCheckbox(const std::string& label, bool* v);
     static void CreateFloatSlider(const std::string& label, float* v, float min, float max);
     static void CreateIntSlider(const std::string& label, int* v, int min, int max);
