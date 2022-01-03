@@ -1,12 +1,12 @@
 //
-//  Time.hpp
+//  Time.h
 //  SdlTest2
 //
 //  Created by Gabriele Padovani on 28/08/21.
 //
 
-#ifndef Time_hpp
-#define Time_hpp
+#ifndef Time_h
+#define Time_h
 
 #include <stdio.h>
 #include <iostream>
@@ -25,4 +25,4 @@ public:
     static void Count();
 };
 
-#endif /* Time_hpp */
+#endif /* Time_h */

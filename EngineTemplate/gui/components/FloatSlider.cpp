@@ -5,7 +5,7 @@
 //  Created by Gabriele Padovani on 30/10/21.
 //
 
-#include "FloatSlider.hpp"
+#include "FloatSlider.h"
 
 FloatSlider::FloatSlider(const std::string& label, float* v, float min, float max){
     this->label = label; 

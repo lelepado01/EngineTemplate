@@ -5,7 +5,7 @@
 //  Created by Gabriele Padovani on 08/10/21.
 //
 
-#include "Vector3f.hpp"
+#include "Vector3f.h"
 
 Vector3f::Vector3f(const float x, const float y, const float z){
     this->x = x;

@@ -1,12 +1,12 @@
 //
-//  Vector3f.hpp
+//  Vector3f.h
 //  IsometricEngine
 //
 //  Created by Gabriele Padovani on 08/10/21.
 //
 
-#ifndef Vector3f_hpp
-#define Vector3f_hpp
+#ifndef Vector3f_h
+#define Vector3f_h
 
 #include <stdio.h>
 #include <math.h>
@@ -41,4 +41,4 @@ public:
 
 
 
-#endif /* Vector3f_hpp */
+#endif /* Vector3f_h */

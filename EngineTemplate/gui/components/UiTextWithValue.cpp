@@ -5,7 +5,7 @@
 //  Created by Gabriele Padovani on 25/12/21.
 //
 
-#include "UiTextWithValue.hpp"
+#include "UiTextWithValue.h"
 
 UiTextWithValue::UiTextWithValue(const std::string& label, float* v){
     this->label = label;

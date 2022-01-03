@@ -5,7 +5,7 @@
 //  Created by Gabriele Padovani on 29/10/21.
 //
 
-#include "Gui.hpp"
+#include "Gui.h"
 
 int Gui::widgetIndex = 0;
 int Gui::lastFrameWidgetsCount = 0;

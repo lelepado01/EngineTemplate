@@ -5,7 +5,7 @@
 //  Created by Gabriele Padovani on 30/10/21.
 //
 
-#include "IntSlider.hpp"
+#include "IntSlider.h"
 
 IntSlider::IntSlider(const std::string& label, int* v, int min, int max){
     this->label = label; 

@@ -2,9 +2,9 @@
 #include <stdio.h>
 #include <iostream>
 
-#include "Gui.hpp"
-#include "Engine.hpp"
-#include "Time.hpp"
+#include "Gui.h"
+#include "Engine.h"
+#include "Time.h"
 
 int main(int, char**) {
     

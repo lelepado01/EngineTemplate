@@ -5,7 +5,7 @@
 //  Created by Gabriele Padovani on 29/10/21.
 //
 
-#include "Checkbox.hpp"
+#include "Checkbox.h"
 
 Checkbox::Checkbox(const std::string& label, bool* c) {
     this->label = label;

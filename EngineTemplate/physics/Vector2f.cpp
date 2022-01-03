@@ -5,7 +5,7 @@
 //  Created by Gabriele Padovani on 30/08/21.
 //
 
-#include "Vector2f.hpp"
+#include "Vector2f.h"
 
 Vector2f::Vector2f(const float x, const float y){
     this->x = x;

@@ -5,7 +5,7 @@
 //  Created by Gabriele Padovani on 21/12/21.
 //
 
-#include "UiText.hpp"
+#include "UiText.h"
 
 UiText::UiText(const std::string& label){
     this->label = label;

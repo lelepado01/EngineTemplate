@@ -1,12 +1,12 @@
 //
-//  math_common.hpp
+//  MathCommon.h
 //  EngineTemplate
 //
 //  Created by Gabriele Padovani on 31/10/21.
 //
 
-#ifndef math_common_hpp
-#define math_common_hpp
+#ifndef MathCommon_h
+#define MathCommon_h
 
 #include <SDL.h>
 
@@ -17,4 +17,4 @@ public:
     }
 };
 
-#endif /* math_common_hpp */
+#endif /* MathCommon_h */

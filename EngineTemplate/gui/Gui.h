@@ -1,24 +1,24 @@
 //
-//  Gui.hpp
+//  Gui.h
 //  EngineTemplate
 //
 //  Created by Gabriele Padovani on 29/10/21.
 //
 
-#ifndef Gui_hpp
-#define Gui_hpp
+#ifndef Gui_h
+#define Gui_h
 
 #include <stdio.h>
 #include <math.h>
 
-#include "Engine.hpp"
-#include "FloatSlider.hpp"
-#include "IntSlider.hpp"
-#include "Checkbox.hpp"
-#include "Widget.hpp"
-#include "UiText.hpp"
-#include "UiTextWithValue.hpp"
-#include "MathCommon.hpp"
+#include "Engine.h"
+#include "FloatSlider.h"
+#include "IntSlider.h"
+#include "Checkbox.h"
+#include "Widget.h"
+#include "UiText.h"
+#include "UiTextWithValue.h"
+#include "MathCommon.h"
 
 class Gui {
 private:
@@ -63,4 +63,4 @@ public:
 };
 
 
-#endif /* Gui_hpp */
+#endif /* Gui_h */

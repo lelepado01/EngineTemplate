@@ -5,7 +5,7 @@
 //  Created by Gabriele Padovani on 28/08/21.
 //
 
-#include "Engine.hpp"
+#include "Engine.h"
 
 bool Engine::running = true;
 bool Engine::debugMode = false;

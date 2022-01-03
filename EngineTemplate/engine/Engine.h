@@ -1,12 +1,12 @@
 //
-//  Engine.hpp
+//  Engine.h
 //  SdlTest2
 //
 //  Created by Gabriele Padovani on 28/08/21.
 //
 
-#ifndef Engine_hpp
-#define Engine_hpp
+#ifndef Engine_h
+#define Engine_h
 
 #include <stdio.h>
 #include <iostream>
@@ -76,4 +76,4 @@ public:
 };
 
 
-#endif /* Engine_hpp */
+#endif /* Engine_h */

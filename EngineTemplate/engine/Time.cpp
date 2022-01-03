@@ -5,7 +5,7 @@
 //  Created by Gabriele Padovani on 28/08/21.
 //
 
-#include "Time.hpp"
+#include "Time.h"
 
 float Time::deltaTime = 0;
 std::chrono::time_point<std::chrono::steady_clock> Time::old_time = std::chrono::steady_clock::now();

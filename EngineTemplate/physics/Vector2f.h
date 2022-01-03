@@ -1,12 +1,12 @@
 //
-//  Vector2f.hpp
+//  Vector2f.h
 //  ShooterSDL
 //
 //  Created by Gabriele Padovani on 30/08/21.
 //
 
-#ifndef Vector2f_hpp
-#define Vector2f_hpp
+#ifndef Vector2f_h
+#define Vector2f_h
 
 #include <stdio.h>
 #include <math.h>
@@ -38,4 +38,4 @@ public:
     bool operator ==(const Vector2f& v);
 };
 
-#endif /* Vector2f_hpp */
+#endif /* Vector2f_h */

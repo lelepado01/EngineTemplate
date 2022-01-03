@@ -1,17 +1,17 @@
 //
-//  Widget.hpp
+//  Widget.h
 //  EngineTemplate
 //
 //  Created by Gabriele Padovani on 30/10/21.
 //
 
-#ifndef Widget_hpp
-#define Widget_hpp
+#ifndef Widget_h
+#define Widget_h
 
 #include <stdio.h>
 #include <optional>
 
-#include "UiComponent.hpp"
+#include "UiComponent.h"
 
 
 struct Widget {
@@ -106,4 +106,4 @@ struct Widget {
     }
 };
 
-#endif /* Widget_hpp */
+#endif /* Widget_h */
